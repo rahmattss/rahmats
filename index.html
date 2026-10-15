@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#031426">
+<title>Virtual Aquarium — Dunia Bawah Lautmu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-icon">🐠</span> Virtual Aquarium</a>
+  <nav>
+    <a href="#home">Beranda</a><a href="#aquarium">Akuarium</a><a href="#features">Fitur</a><a href="#fish">Koleksi Ikan</a><a href="#creator">Pembuat</a>
+  </nav>
+  <button id="themeToggle" class="outline-btn">☾ Mode Malam</button>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="water-glow"></div><div class="bubbles" id="bubbles"></div>
+  <div class="hero-copy">
+    <span class="eyebrow">🌊 AQUARIUM DIGITAL INTERAKTIF</span>
+    <h1>Dunia bawah laut,<br><span>di ujung jarimu.</span></h1>
+    <p>Rawat ikan virtual, beri mereka makan, ubah suasana akuarium, dan nikmati ketenangan lautan langsung dari browser.</p>
+    <div class="hero-actions"><a class="primary-btn" href="#aquarium">▶ Mulai Jelajahi</a><button class="secondary-btn" id="feedHero">🐟 Beri Makan</button></div>
+    <div class="stats">
+      <div><strong id="fishCount">6</strong><span>Ikan aktif</span></div>
+      <div><strong id="foodCount">12</strong><span>Porsi makanan</span></div>
+      <div><strong id="happyCount">100%</strong><span>Kebahagiaan</span></div>
+    </div>
+  </div>
+  <div class="hero-art" aria-label="Ilustrasi akuarium bawah laut">
+    <div class="sun-rays"></div>
+    <div class="jelly">🪼</div><div class="coral coral-a">🌿</div><div class="coral coral-b">🪸</div>
+    <div class="ruins">🏛️</div>
+    <div class="fish fish-one">🐠</div><div class="fish fish-two">🐟</div><div class="fish fish-three">🐡</div>
+    <div class="fish fish-four">🐠</div><div class="fish fish-five">🐟</div><div class="fish fish-six">🐠</div>
+    <div class="sand"></div>
+    <div class="water-label">● LIVE AQUARIUM <span>•</span> <span id="moodLabel">Ekosistem sehat</span></div>
+  </div>
+</section>
+
+<section id="aquarium" class="section aquarium-section">
+  <div class="section-heading"><div><span class="eyebrow">RUANG HIDUP IKANMU</span><h2>Akuarium <span>Utama</span></h2></div><p>Interaksi sederhana, suasana yang menenangkan.</p></div>
+  <div class="aquarium-frame" id="tank">
+    <div class="tank-rays"></div><div class="water-caustics"></div><div class="water-haze"></div><div class="tank-bubbles" id="tankBubbles"></div><div class="water-particles" id="waterParticles"></div>
+    <div class="tank-fish" id="tankFish">
+      <span class="swim f1">🐠</span><span class="swim f2">🐟</span><span class="swim f3">🐡</span><span class="swim f4">🐠</span><span class="swim f5">🐟</span><span class="swim f6">🐠</span>
+    </div>
+    <div class="tank-plants">🌿　🪸　🌱　🌿　🪸　🌱　🌿</div>
+    <div class="tank-floor"></div>
+    <div class="tank-overlay"><span>AKUARIUM VIRTUAL</span><strong id="tankMessage">Ikan-ikanmu sedang berenang dengan bahagia.</strong></div>
+  </div>
+  <div class="control-grid">
+    <button class="control-card" id="feedBtn"><span>🍤</span><b>Beri Makan Ikan</b><small>Sebarkan makanan ke dalam air</small></button>
+    <button class="control-card" id="bubbleBtn"><span>🫧</span><b>Buat Gelembung</b><small>Tambahkan gelembung air</small></button>
+    <button class="control-card" id="addFishBtn"><span>🐟</span><b>Tambah Ikan</b><small>Tambahkan penghuni baru</small></button>
+    <button class="control-card" id="relaxBtn"><span>🌙</span><b>Mode Santai</b><small>Kurangi gangguan dan nikmati suasana</small></button>
+    <button class="control-card" id="cleanBtn"><span>🧽</span><b>Bersihkan Air</b><small>Jernihkan air dan rawat ekosistem</small></button>
+    <button class="control-card" id="soundBtn"><span>🔊</span><b>Suara Akuarium: Mati</b><small>Aktifkan ambience air dan efek suara</small></button>
+  </div>
+</section>
+
+<section id="features" class="section">
+  <div class="section-heading"><div><span class="eyebrow">FITUR UNGGULAN</span><h2>Jadikan lautmu <span>istimewa</span></h2></div><p>Personalisasi akuarium sesuai suasana hatimu.</p></div>
+  <div class="theme-grid">
+    <button class="theme-card active" data-theme="tropical"><div class="theme-preview tropical"><span>🐠 🐟 🪸</span></div><b>🌴 Laut Tropis</b><small>Air biru jernih dan warna cerah</small></button>
+    <button class="theme-card" data-theme="deep"><div class="theme-preview deep"><span>🪼 🐟 🌑</span></div><b>🌌 Laut Dalam</b><small>Nuansa gelap dan misterius</small></button>
+    <button class="theme-card" data-theme="coral"><div class="theme-preview coral-theme"><span>🐡 🪸 🐠</span></div><b>🪸 Terumbu Karang</b><small>Warna hangat dan karang cerah</small></button>
+    <button class="theme-card" data-theme="mint"><div class="theme-preview mint"><span>🐟 🌿 🫧</span></div><b>🍃 Laguna Mint</b><small>Hijau lembut yang menenangkan</small></button>
+  </div>
+</section>
+
+<section id="fish" class="section">
+  <div class="section-heading"><div><span class="eyebrow">KENALI PENGHUNIMU</span><h2>Koleksi <span>Ikan</span></h2></div><p>Pilih ikan favorit untuk melihat detailnya.</p></div>
+  <div class="fish-grid" id="fishGrid">
+    <button class="fish-card" data-name="Clownfish" data-desc="Ikan kecil berwarna oranye yang aktif dan ramah."><span>🐠</span><b>Clownfish</b><small>Aktif • Pemula</small></button>
+    <button class="fish-card" data-name="Blue Tang" data-desc="Ikan biru yang senang berenang menjelajahi akuarium."><span>🐟</span><b>Blue Tang</b><small>Jelajah • Sedang</small></button>
+    <button class="fish-card" data-name="Pufferfish" data-desc="Ikan unik yang menjadi pusat perhatian di akuarium."><span>🐡</span><b>Pufferfish</b><small>Unik • Pemula</small></button>
+    <button class="fish-card" data-name="Coral Fish" data-desc="Ikan karang yang suka berenang di sekitar tanaman."><span>🐠</span><b>Coral Fish</b><small>Tenang • Pemula</small></button>
+    <button class="fish-card" data-name="Little Sardine" data-desc="Ikan kecil yang tampak cantik ketika berenang bersama."><span>🐟</span><b>Little Sardine</b><small>Berkelompok • Mudah</small></button>
+    <button class="fish-card" data-name="Golden Fish" data-desc="Ikan keemasan yang menambah warna ceria di akuarium."><span>🐠</span><b>Golden Fish</b><small>Ceria • Pemula</small></button>
+  </div>
+  <div id="fishDetail" class="fish-detail" hidden><span id="detailEmoji">🐠</span><div><b id="detailName">Clownfish</b><p id="detailDesc"></p></div><button id="closeDetail" aria-label="Tutup detail">✕</button></div>
+</section>
+
+<section class="section care-section">
+  <div class="care-copy"><span class="eyebrow">PANTAU KONDISI</span><h2>Air yang baik,<br><span>ikan yang bahagia.</span></h2><p>Periksa indikator virtual untuk menjaga suasana akuariummu tetap nyaman.</p></div>
+  <div class="water-panel">
+    <div class="water-row"><div><b>Kebersihan air</b><span id="cleanValue">95%</span></div><div class="bar"><i id="cleanBar" style="width:95%"></i></div></div>
+    <div class="water-row"><div><b>Suhu air</b><span>26°C</span></div><div class="bar"><i style="width:62%"></i></div></div>
+    <div class="water-row"><div><b>Keseimbangan pH</b><span>7.2</span></div><div class="bar"><i style="width:72%"></i></div></div>
+    <div class="water-note">💧 <span id="careTip">Kondisi akuarium terlihat sangat baik.</span></div>
+  </div>
+</section>
+
+
+<section id="creator" class="section creator-section">
+  <div class="creator-card">
+    <div class="creator-avatar" aria-hidden="true">R</div>
+    <div class="creator-info">
+      <span class="eyebrow">DIBUAT DENGAN ✦</span>
+      <h2>Kenalan dengan <span>Rahmat</span></h2>
+      <p>Virtual Aquarium ini dibuat oleh Rahmat. Terima kasih sudah mampir dan menjelajahi dunia bawah laut virtual ini!</p>
+      <div class="creator-links">
+        <a class="contact-link whatsapp-link" href="https://wa.me/6285819610299" target="_blank" rel="noopener noreferrer">☏ Hubungi via WhatsApp</a>
+        <a class="contact-link instagram-link" href="https://www.instagram.com/one.idgaf/" target="_blank" rel="noopener noreferrer">◎ Ikuti Instagram @one.idgaf</a>
+      </div>
+    </div>
+    <div class="creator-signature">Made by<br><strong>RAHMAT</strong><span>Virtual Aquarium · 2026</span></div>
+  </div>
+</section>
+
+<footer><a class="brand" href="#"><span>🐠</span> Virtual Aquarium</a><p>Dibuat untuk menemani waktu santaimu. <span>© 2026</span></p><a href="#home">Kembali ke atas ↑</a></footer>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script src="script.js"></script>
+</body>
+</html>
