@@ -56,12 +56,6 @@ $('cleanBtn').addEventListener('click',()=>{
 $('soundBtn').addEventListener('click',()=>{soundEnabled=!soundEnabled;$('soundBtn').querySelector('b').textContent='Suara Akuarium: '+(soundEnabled?'Aktif':'Mati');$('soundBtn').querySelector('span').textContent=soundEnabled?'🔊':'🔇';$('soundBtn').querySelector('small').textContent=soundEnabled?'Efek makan, gelembung, ikan, dan ambience air aktif':'Aktifkan ambience air dan efek suara';if(soundEnabled){audioReady();playSound('bubble');ambientSound();ambientTimer=setInterval(ambientSound,1300);toast('🔊 Suara akuarium diaktifkan.')}else{clearInterval(ambientTimer);ambientTimer=null;toast('🔇 Suara akuarium dimatikan.')}});
 
 
-$('refillBtn').addEventListener('click',()=>{
-  if(food>=60){toast('🥣 Stok makanan sudah penuh! Maksimal 60 porsi.');return}
-  food=Math.min(60,food+12);playSound('feed');updateStats();
-  $('tankMessage').textContent='Persediaan makanan sudah diisi ulang.';
-  toast('🥣 Berhasil isi ulang! Stok sekarang '+food+' porsi.');
-});
 $('lampBtn').addEventListener('click',()=>{
   lampOn=!lampOn;$('tank').classList.toggle('lamp-off',!lampOn);
   $('lampBtn').querySelector('b').textContent='Lampu Akuarium: '+(lampOn?'Nyala':'Redup');
@@ -92,13 +86,27 @@ let coins = 30, hunger = 100;
 const fishTypes = {clown:{name:'Ikan Badut',emoji:'🐠',price:10},puffer:{name:'Ikan Buntal',emoji:'🐡',price:12},tang:{name:'Blue Tang',emoji:'🐟',price:14},gold:{name:'Ikan Mas',emoji:'🐠',price:8},turtle:{name:'Kura-kura',emoji:'🐢',price:18}};
 let fishInventory = {clown:0,puffer:0,tang:0,gold:0,turtle:0};
 const missionDone = {feed:false, clean:false, bubble:false};
+const MISSION_INTERVAL = 24 * 60 * 60 * 1000;
+let missionResetAt = Date.now();
+function resetDailyMissions(){
+  missionDone.feed=false; missionDone.clean=false; missionDone.bubble=false;
+  missionDone.feedAction=false; missionDone.cleanAction=false; missionDone.bubbleAction=false;
+  missionResetAt=Date.now();
+}
+function checkDailyMissionRefresh(){
+  if(Date.now()-missionResetAt >= MISSION_INTERVAL){
+    resetDailyMissions();
+    toast('🔄 Misi harian diperbarui! Kamu punya 24 jam untuk menyelesaikannya.');
+  }
+}
 function saveGame(){
   try{
     const decor=[...document.querySelectorAll('.decor-item')].map((el)=>({text:el.textContent,cls:el.className,left:el.style.left,top:el.style.top,bottom:el.style.bottom,right:el.style.right,position:el.style.position}));
-    localStorage.setItem('virtualAquariumV6',JSON.stringify({food,fish,happy,clean,coins,hunger,missionDone,fishInventory,decor}));
+    localStorage.setItem('virtualAquariumV7',JSON.stringify({food,fish,happy,clean,coins,hunger,missionDone,missionResetAt,fishInventory,decor,tankFishKinds:[...$('tankFish').querySelectorAll('.swim')].map(el=>({kind:el.dataset.fishKind||kindFromEmoji(el.textContent),emoji:el.textContent,cls:el.className,top:el.style.top,left:el.style.left,animationDelay:el.style.animationDelay}))}));
   }catch(e){}
 }
 function updateGameUI(){
+  checkDailyMissionRefresh();
   $('coinCount').textContent=coins;$('hungerValue').textContent=hunger+'%';$('hungerBar').style.width=hunger+'%';
   $('hungerBar').style.background=hunger<30?'linear-gradient(90deg,#ff6969,#ffb36b)':'linear-gradient(90deg,#26d9a1,#8eea72)';
   for(const key of ['feed','clean','bubble']){const btn=$('claim'+key[0].toUpperCase()+key.slice(1));if(btn){btn.disabled=missionDone[key];btn.textContent=missionDone[key]?'✓ Selesai':'Klaim +5 🪙'}}
@@ -153,11 +161,67 @@ $('tank').addEventListener('pointerdown',e=>{
 window.addEventListener('pointermove',e=>{if(!decorationMode||!dragItem)return;const r=$('tank').getBoundingClientRect();dragItem.style.left=Math.max(8,Math.min(r.width-20,e.clientX-r.left-dragOffsetX))+'px';dragItem.style.top=Math.max(12,Math.min(r.height-42,e.clientY-r.top-dragOffsetY))+'px'});
 window.addEventListener('pointerup',()=>{if(!dragItem)return;dragItem.classList.remove('is-dragging');dragItem=null;saveGame();toast('Dekorasi dipindahkan dan disimpan!')});
 try{
-  const saved=JSON.parse(localStorage.getItem('virtualAquariumV6')||localStorage.getItem('virtualAquariumV5')||'null');
-  if(saved){food=Number.isFinite(saved.food)?saved.food:food;fish=Number.isFinite(saved.fish)?saved.fish:fish;happy=Number.isFinite(saved.happy)?saved.happy:happy;clean=Number.isFinite(saved.clean)?saved.clean:clean;coins=Number.isFinite(saved.coins)?saved.coins:coins;hunger=Number.isFinite(saved.hunger)?saved.hunger:hunger;Object.assign(missionDone,saved.missionDone||{});Object.assign(fishInventory,saved.fishInventory||{});
+  const saved=JSON.parse(localStorage.getItem('virtualAquariumV7')||localStorage.getItem('virtualAquariumV6')||localStorage.getItem('virtualAquariumV5')||'null');
+  if(saved){food=Number.isFinite(saved.food)?saved.food:food;fish=Number.isFinite(saved.fish)?saved.fish:fish;happy=Number.isFinite(saved.happy)?saved.happy:happy;clean=Number.isFinite(saved.clean)?saved.clean:clean;coins=Number.isFinite(saved.coins)?saved.coins:coins;hunger=Number.isFinite(saved.hunger)?saved.hunger:hunger;Object.assign(missionDone,saved.missionDone||{});missionResetAt=Number.isFinite(saved.missionResetAt)?saved.missionResetAt:Date.now();Object.assign(fishInventory,saved.fishInventory||{});
     if(Array.isArray(saved.decor)){const els=decorItems();saved.decor.forEach((d,i)=>{const el=els[i];if(el&&d.text===el.textContent&&d.left&&d.top){el.style.position=d.position||'absolute';el.style.left=d.left;el.style.top=d.top;el.style.bottom=d.bottom||'auto';el.style.right=d.right||'auto';el.style.zIndex='4'}})}
+    if(Array.isArray(saved.tankFishKinds)){const holder=$('tankFish');holder.innerHTML='';saved.tankFishKinds.forEach((d,i)=>{const el=document.createElement('span');el.className=d.cls||'swim';el.textContent=d.emoji||'🐠';el.dataset.fishKind=d.kind||kindFromEmoji(el.textContent);el.style.top=d.top||((12+Math.random()*65)+'%');el.style.left=d.left||((5+Math.random()*80)+'%');el.style.animationDelay=d.animationDelay||(-Math.random()*8)+'s';holder.appendChild(el)});fish=holder.querySelectorAll('.swim').length}
     updateStats();
   }
 }catch(e){}
 updateGameUI();
+setInterval(()=>{checkDailyMissionRefresh();updateGameUI()},60*1000);
 setInterval(()=>{if(hunger>0){hunger=Math.max(0,hunger-1);if(hunger<30)happy=Math.max(10,happy-1);updateStats();updateGameUI()}},60000);
+
+
+// V8: pindahkan ikan dari akuarium kembali ke inventaris.
+let moveFishMode = false;
+function kindFromEmoji(emoji){
+  if(emoji==='🐡') return 'puffer';
+  if(emoji==='🐢') return 'turtle';
+  if(emoji==='🐟') return 'tang';
+  return 'clown';
+}
+function setupTankFishKinds(){
+  const initial=['clown','tang','puffer','clown','tang','clown','tang','clown','puffer','tang'];
+  [...$('tankFish').querySelectorAll('.swim')].forEach((el,i)=>{
+    if(!el.dataset.fishKind)el.dataset.fishKind=initial[i]||kindFromEmoji(el.textContent);
+    el.title=moveFishMode?'Klik ikan ini untuk memindahkannya ke inventaris':'';
+  });
+}
+setupTankFishKinds();
+const moveFishBtn=$('moveFishBtn');
+if(moveFishBtn){
+  moveFishBtn.addEventListener('click',()=>{
+    moveFishMode=!moveFishMode;
+    $('tank').classList.toggle('move-fish-mode',moveFishMode);
+    moveFishBtn.classList.toggle('active',moveFishMode);
+    moveFishBtn.querySelector('b').textContent=moveFishMode?'Selesai Memindahkan Ikan':'Pindahkan Ikan ke Inventaris';
+    moveFishBtn.querySelector('small').textContent=moveFishMode?'Sekarang klik ikan yang ingin dikeluarkan':'Aktifkan lalu klik ikan yang ingin dikeluarkan';
+    setupTankFishKinds();
+    toast(moveFishMode?'🎒 Mode pindahkan ikan aktif. Klik ikan di akuarium.':'Mode pindahkan ikan selesai.');
+  });
+}
+$('tankFish').addEventListener('click',e=>{
+  if(!moveFishMode)return;
+  const el=e.target.closest('.swim');
+  if(!el)return;
+  e.preventDefault();e.stopPropagation();
+  const kind=el.dataset.fishKind||kindFromEmoji(el.textContent);
+  fishInventory[kind]=(fishInventory[kind]||0)+1;
+  el.remove();fish=Math.max(0,fish-1);
+  updateStats();updateGameUI();
+  toast('🎒 '+(fishTypes[kind]?.name||'Ikan')+' dipindahkan ke inventaris.');
+  $('tankMessage').textContent='Ikan sudah dipindahkan ke inventaris dan bisa dimasukkan kembali kapan saja.';
+});
+// Pastikan ikan baru juga memiliki jenis yang dapat dipindahkan kembali.
+const originalAddFishToTankV8=addFishToTank;
+addFishToTank=function(kind){originalAddFishToTankV8(kind);const el=[...$('tankFish').querySelectorAll('.swim')].at(-1);if(el)el.dataset.fishKind=kind;setupTankFishKinds();};
+// Memulihkan jenis dan posisi ikan yang tersimpan dari sesi sebelumnya.
+try{
+ const v8save=JSON.parse(localStorage.getItem('virtualAquariumV7')||'null');
+ if(v8save&&Array.isArray(v8save.tankFishKinds)){
+   const holder=$('tankFish');holder.innerHTML='';
+   v8save.tankFishKinds.forEach((d,i)=>{const el=document.createElement('span');el.className=d.cls||'swim';el.textContent=d.emoji||fishTypes[d.kind]?.emoji||'🐠';el.dataset.fishKind=d.kind||kindFromEmoji(el.textContent);el.style.top=d.top||((12+Math.random()*65)+'%');el.style.left=d.left||((5+Math.random()*80)+'%');el.style.animationDelay=d.animationDelay||(-Math.random()*8)+'s';holder.appendChild(el)});
+   fish=holder.querySelectorAll('.swim').length;updateStats();updateGameUI();
+ }
+}catch(e){}
