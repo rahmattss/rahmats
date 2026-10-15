@@ -16,8 +16,29 @@ function updateStats(){
   $('waterStatus').textContent=clean>75?'AIR JERNIH':clean>45?'AIR MULAI KERUH':'AIR SANGAT KERUH';
   $('waterStatus').style.color=clean>75?'#b8f8ff':clean>45?'#f8df8b':'#ffb2a7';
 }
-function dropFood(){const pellet=document.createElement('i');pellet.className='food-pellet';pellet.style.left=(15+Math.random()*70)+'%';pellet.style.animationDuration=(1.8+Math.random()*1.4)+'s';$('tank').appendChild(pellet);setTimeout(()=>pellet.remove(),3500)}
-function feed(){if(food<=0){toast('Makanan habis! Tekan “Isi Ulang Makanan” 🥣');$('tankMessage').textContent='Stok makanan habis. Isi ulang sebelum memberi makan lagi.';return}food--;playSound('feed');happy=Math.min(100,happy+3);clean=Math.max(15,clean-7);updateStats();toast('🍤 Makanan ditebarkan! Ikan-ikanmu senang.');$('tankMessage').textContent='Nyam! Ikan-ikan sedang menikmati makanan.';for(let i=0;i<12;i++){makeBubble(true);dropFood()}}
+function dropFood(){
+  const tank=$('tank'), pellet=document.createElement('i');
+  pellet.className='food-pellet';pellet.style.left=(15+Math.random()*70)+'%';
+  pellet.style.animationDuration=(1.4+Math.random()*.6)+'s';tank.appendChild(pellet);
+  // Setelah pelet jatuh sebentar, ikan terdekat mengejarnya lalu pelet menghilang saat dimakan.
+  setTimeout(()=>{
+    if(!pellet.isConnected)return;
+    const fishes=[...$('tankFish').querySelectorAll('.swim')].filter(f=>!f.classList.contains('extra-fish')||f.isConnected);
+    if(!fishes.length){pellet.remove();return}
+    const pr=pellet.getBoundingClientRect();
+    let target=fishes[0],best=Infinity;
+    for(const f of fishes){const r=f.getBoundingClientRect();const d=Math.hypot((r.left+r.width/2)-(pr.left+pr.width/2),(r.top+r.height/2)-(pr.top+pr.height/2));if(d<best){best=d;target=f}}
+    target.classList.add('chasing-food');
+    const tr=target.getBoundingClientRect(),tankRect=tank.getBoundingClientRect();
+    pellet.style.animation='none';pellet.style.transition='left .65s ease-in, top .65s ease-in, opacity .65s ease-in, transform .65s ease-in';
+    pellet.style.left=(tr.left+tankRect.left*-1+tr.width/2-3)+'px';
+    pellet.style.top=(tr.top-tankRect.top+tr.height/2-3)+'px';
+    pellet.style.transform='scale(.25)';pellet.style.opacity='0';
+    setTimeout(()=>{pellet.remove();target.classList.remove('chasing-food');target.classList.add('nibble');setTimeout(()=>target.classList.remove('nibble'),650)},650);
+  },900);
+  setTimeout(()=>pellet.remove(),4000);
+}
+function feed(){if(food<=0){toast('Makanan habis! Tekan “Isi Ulang Makanan” 🥣');$('tankMessage').textContent='Stok makanan habis. Isi ulang sebelum memberi makan lagi.';return}food--;playSound('feed');happy=Math.min(100,happy+3);clean=Math.max(15,clean-7);updateStats();toast('🍤 Makanan ditebarkan! Lihat ikan mengejar peletnya.');$('tankMessage').textContent='Nyam! Ikan-ikan mengejar pelet dan memakannya.';for(let i=0;i<8;i++){makeBubble(true);dropFood()}}
 function makeBubble(foodBubble=false){const b=document.createElement('i');b.className='bubble';b.style.left=(Math.random()*96+2)+'%';b.style.animationDuration=(3+Math.random()*3)+'s';b.style.width=b.style.height=(5+Math.random()*9)+'px';$('tankBubbles').appendChild(b);setTimeout(()=>b.remove(),6500)}
 $('feedBtn').addEventListener('click',feed);$('feedHero').addEventListener('click',feed);
 $('bubbleBtn').addEventListener('click',()=>{playSound('bubble');for(let i=0;i<22;i++)setTimeout(()=>makeBubble(),i*70);clean=Math.min(100,clean+1);updateStats();toast('🫧 Gelembung baru memenuhi akuarium!')});
@@ -65,3 +86,63 @@ for(let i=0;i<18;i++)setTimeout(()=>makeBubble(),i*280);
 for(let i=0;i<34;i++){const p=document.createElement('i');p.className='water-particle';p.style.left=(Math.random()*100)+'%';p.style.top=(35+Math.random()*65)+'%';p.style.animationDelay=(-Math.random()*8)+'s';p.style.animationDuration=(6+Math.random()*7)+'s';$('waterParticles').appendChild(p)}
 setInterval(()=>{if(!relax && Math.random()>.6){happy=Math.max(60,happy-1);updateStats()}},30000);
 updateStats();
+
+// V5 game layer: coins, shop, daily-style missions, hunger, autosave and movable decor.
+let coins = 30, hunger = 100;
+const missionDone = {feed:false, clean:false, bubble:false};
+let decorationMode = false;
+function saveGame(){
+  try{
+    const decor=[...document.querySelectorAll('.tank-decor,.tank-plants span')].map((el)=>({text:el.textContent,cls:el.className,left:el.style.left,top:el.style.top,bottom:el.style.bottom,right:el.style.right,position:el.style.position}));
+    localStorage.setItem('virtualAquariumV5',JSON.stringify({food,fish,happy,clean,coins,hunger,missionDone,decor}));
+  }catch(e){}
+}
+function updateGameUI(){
+  $('coinCount').textContent=coins;$('hungerValue').textContent=hunger+'%';$('hungerBar').style.width=hunger+'%';
+  $('hungerBar').style.background=hunger<30?'linear-gradient(90deg,#ff6969,#ffb36b)':'linear-gradient(90deg,#26d9a1,#8eea72)';
+  for(const key of ['feed','clean','bubble']){const btn=$('claim'+key[0].toUpperCase()+key.slice(1));if(btn){btn.disabled=missionDone[key];btn.textContent=missionDone[key]?'✓ Selesai':'Klaim +5 🪙'}}
+  saveGame();
+}
+function claimMission(key){if(missionDone[key]){toast('Misi ini sudah diklaim.');return}const available=key==='feed'?missionDone.feedAction:key==='clean'?missionDone.cleanAction:missionDone.bubbleAction;if(!available){toast('Selesaikan aktivitas ini terlebih dahulu!');return}missionDone[key]=true;coins+=5;updateGameUI();toast('🏆 Misi selesai! Kamu mendapat 5 koin.');}
+missionDone.feedAction=false;missionDone.cleanAction=false;missionDone.bubbleAction=false;
+$('claimFeed').addEventListener('click',()=>claimMission('feed'));
+$('claimClean').addEventListener('click',()=>claimMission('clean'));
+$('claimBubble').addEventListener('click',()=>claimMission('bubble'));
+$('feedBtn').addEventListener('click',()=>{missionDone.feedAction=true;hunger=Math.min(100,hunger+18);coins+=1;updateGameUI()});
+$('feedHero').addEventListener('click',()=>{missionDone.feedAction=true;hunger=Math.min(100,hunger+18);coins+=1;updateGameUI()});
+$('cleanBtn').addEventListener('click',()=>{missionDone.cleanAction=true;updateGameUI()});
+$('bubbleBtn').addEventListener('click',()=>{missionDone.bubbleAction=true;updateGameUI()});
+document.querySelectorAll('.shop-item').forEach(btn=>btn.addEventListener('click',()=>{
+  const kind=btn.dataset.shop;const price=kind==='clown'?10:kind==='puffer'?12:5;
+  if(coins<price){toast('Koin belum cukup! Coba selesaikan misi atau beri makan ikan.');return}
+  if(kind!=='food'&&fish>=14){toast('Akuarium sudah penuh! Maksimal 14 ikan.');return}
+  coins-=price;
+  if(kind==='food'){food=Math.min(60,food+10);toast('🍤 Paket pakan dibeli! +10 porsi.');}
+  else{fish++;const el=document.createElement('span');el.className='swim';el.textContent=kind==='clown'?'🐠':'🐡';el.style.top=(15+Math.random()*58)+'%';el.style.left=(8+Math.random()*75)+'%';el.style.animationDelay=(-Math.random()*8)+'s';$('tankFish').appendChild(el);happy=Math.min(100,happy+1);toast('🐟 Ikan baru berhasil dibeli!');}
+  updateStats();updateGameUI();
+}));
+$('decorateToggle').addEventListener('click',()=>{
+  decorationMode=!decorationMode;document.body.classList.toggle('decorate-mode',decorationMode);
+  $('decorateToggle').textContent=decorationMode?'✋ Tata Dekorasi: Aktif':'✋ Tata Dekorasi: Mati';
+  const items=[...document.querySelectorAll('.tank-decor,.tank-plants span')];
+  items.forEach(el=>{el.draggable=decorationMode;if(decorationMode){el.title='Seret untuk memindahkan dekorasi';el.style.pointerEvents='auto'}else{el.title='';el.style.pointerEvents='none'}});
+  toast(decorationMode?'Seret rumput laut atau ornamen untuk memindahkannya.':'Penataan dekorasi selesai.');
+});
+let dragItem=null;
+document.querySelectorAll('.tank-decor,.tank-plants span').forEach(el=>{
+  el.addEventListener('dragstart',e=>{if(!decorationMode){e.preventDefault();return}dragItem=el;e.dataTransfer.setData('text/plain','decor');e.dataTransfer.effectAllowed='move'});
+});
+$('tank').addEventListener('dragover',e=>{if(decorationMode){e.preventDefault();e.dataTransfer.dropEffect='move'}});
+$('tank').addEventListener('drop',e=>{
+  if(!decorationMode||!dragItem)return;e.preventDefault();const r=$('tank').getBoundingClientRect();
+  dragItem.style.position='absolute';dragItem.style.left=Math.max(0,Math.min(92,(e.clientX-r.left)/r.width*100))+'%';dragItem.style.top=Math.max(4,Math.min(82,(e.clientY-r.top)/r.height*100))+'%';dragItem.style.bottom='auto';dragItem.style.right='auto';dragItem.style.zIndex='4';dragItem=null;saveGame();toast('Dekorasi dipindahkan!');
+});
+try{
+  const saved=JSON.parse(localStorage.getItem('virtualAquariumV5')||'null');
+  if(saved){food=Number.isFinite(saved.food)?saved.food:food;fish=Number.isFinite(saved.fish)?saved.fish:fish;happy=Number.isFinite(saved.happy)?saved.happy:happy;clean=Number.isFinite(saved.clean)?saved.clean:clean;coins=Number.isFinite(saved.coins)?saved.coins:coins;hunger=Number.isFinite(saved.hunger)?saved.hunger:hunger;Object.assign(missionDone,saved.missionDone||{});
+    if(Array.isArray(saved.decor)){const els=[...document.querySelectorAll('.tank-decor,.tank-plants span')];saved.decor.forEach((d,i)=>{const el=els[i];if(el&&d.text===el.textContent&&d.left&&d.top){el.style.position=d.position||'absolute';el.style.left=d.left;el.style.top=d.top;el.style.bottom=d.bottom||'auto';el.style.right=d.right||'auto';el.style.zIndex='4'}})}
+    updateStats();
+  }
+}catch(e){}
+updateGameUI();
+setInterval(()=>{if(hunger>0){hunger=Math.max(0,hunger-1);if(hunger<30)happy=Math.max(10,happy-1);updateStats();updateGameUI()}},60000);
