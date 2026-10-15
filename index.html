@@ -75,8 +75,16 @@
     <div class="shop-card"><div class="shop-title"><span>🛒</span><div><b>Toko Akuarium</b><small>Beli penghuni baru dengan koin</small></div></div><div class="shop-items">
       <button class="shop-item" data-shop="clown"><span>🐠</span><b>Ikan Badut</b><small>Harga: 10 🪙</small><em>Beli ikan</em></button>
       <button class="shop-item" data-shop="puffer"><span>🐡</span><b>Ikan Buntal</b><small>Harga: 12 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="tang"><span>🐟</span><b>Blue Tang</b><small>Harga: 14 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="gold"><span>🐠</span><b>Ikan Mas</b><small>Harga: 8 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="turtle"><span>🐢</span><b>Kura-kura</b><small>Harga: 18 🪙</small><em>Beli hewan</em></button>
       <button class="shop-item" data-shop="food"><span>🍤</span><b>Paket Pakan</b><small>Harga: 5 🪙</small><em>+10 porsi</em></button>
     </div></div>
+    <div class="inventory-card">
+      <div class="shop-title"><span>🎒</span><div><b>Inventaris Ikan</b><small>Ikan yang sudah dibeli tetapi belum dilepas ke akuarium</small></div></div>
+      <div id="fishInventory" class="fish-inventory"></div>
+      <div class="stock-line">🐟 Kapasitas akuarium: <b id="tankCapacity">10 / 14</b> · Stok ikan tersedia: <b id="stockTotal">0</b></div>
+    </div>
     <div class="mission-card"><div class="shop-title"><span>🏆</span><div><b>Misi hari ini</b><small>Selesaikan aktivitas untuk hadiah koin</small></div></div>
       <div class="mission-row"><span>🍤 Beri makan ikan 1 kali</span><button id="claimFeed" class="claim-btn">Klaim +5 🪙</button></div>
       <div class="mission-row"><span>🧽 Bersihkan akuarium 1 kali</span><button id="claimClean" class="claim-btn">Klaim +5 🪙</button></div>
