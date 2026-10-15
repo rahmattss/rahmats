@@ -35,3 +35,42 @@ body.relax-mode .topbar nav,body.relax-mode .outline-btn{opacity:.45}body.relax-
 .water-particles{position:absolute;z-index:2;inset:0;pointer-events:none;overflow:hidden}.water-particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#d9fbff8c;box-shadow:0 0 5px #c4f7ff77;animation:particleDrift 8s linear infinite}
 .tank-floor{height:34px;background:radial-gradient(ellipse at 15% 0%,#e8dfb8,#a6b7a1 55%,#657f7e);box-shadow:0 -8px 20px #001d2c55}.tank-plants{filter:drop-shadow(0 0 8px #1cba9c35)}
 @keyframes surfaceShimmer{0%{opacity:.45;background-position:0 0}100%{opacity:.9;background-position:80px 35px}}@keyframes rayDrift{0%{transform:translateX(-3%) rotate(-2deg)}100%{transform:translateX(4%) rotate(3deg)}}@keyframes causticFlow{to{transform:translate(5%,3%) rotate(7deg)}}@keyframes hazeFloat{to{transform:translateY(-10px);opacity:.8}}@keyframes particleDrift{0%{transform:translate3d(0,25px,0);opacity:0}15%{opacity:.7}85%{opacity:.4}100%{transform:translate3d(18px,-360px,0);opacity:0}}
+
+/* Fitur tambahan: pelet makanan, lampu dan suasana akuarium */
+.food-pellet{position:absolute;z-index:4;top:12%;width:6px;height:6px;border-radius:50%;background:radial-gradient(circle at 30% 25%,#fff0b2,#d89b45 60%,#7b4b20);box-shadow:0 0 5px #ffd78388;pointer-events:none;animation:foodFall 2.4s ease-in forwards}
+@keyframes foodFall{0%{transform:translateY(0) scale(1);opacity:0}12%{opacity:1}85%{opacity:.9}100%{transform:translateY(330px) scale(.7);opacity:0}}
+.aquarium-frame.lamp-off:before{background:linear-gradient(180deg,#000b1e88,#02091bc9);opacity:1}
+.aquarium-frame.lamp-off .tank-rays,.aquarium-frame.lamp-off .water-caustics{opacity:.08}
+.aquarium-frame.lamp-off .swim{filter:brightness(.65)}
+#refillBtn:hover,#lampBtn:hover,#treasureBtn:hover{border-color:rgba(70,210,255,.65);transform:translateY(-2px)}
+
+/* V3: dekorasi lebih ramai + tingkat kekeruhan air yang terlihat */
+.aquarium-frame{overflow:hidden;--dirt-level:0;position:relative;transition:filter .8s,background 1s}
+.water-dirt{position:absolute;z-index:4;inset:0;pointer-events:none;opacity:var(--dirt-level);transition:opacity 1.4s ease,background 1.4s ease;background:
+ radial-gradient(ellipse at 25% 72%,#8a9a4c66,transparent 34%),
+ radial-gradient(ellipse at 72% 45%,#8d7d4b55,transparent 38%),
+ linear-gradient(180deg,#a5a45a22,#766b3c66);
+ mix-blend-mode:multiply}
+.aquarium-frame.dirty-water{filter:saturate(.68)}
+.aquarium-frame.cleaning-water .water-dirt{animation:waterCleanSweep 1.8s ease forwards}
+.aquarium-frame.cleaning-water{animation:cleanSparkle 1.8s ease}
+@keyframes waterCleanSweep{0%{opacity:var(--dirt-level)}35%{opacity:calc(var(--dirt-level) + .12)}100%{opacity:0}}
+@keyframes cleanSparkle{0%,100%{box-shadow:inset 0 0 90px #001526}50%{box-shadow:inset 0 0 100px #a8faff88,0 0 35px #65eaff66}}
+.tank-decor{position:absolute;z-index:2;bottom:30px;font-size:clamp(22px,3.6vw,42px);filter:drop-shadow(0 5px 6px #00101d88);opacity:.92}
+.decor-left{left:4%}.decor-right{right:5%;bottom:38px}
+.tank-plants{position:absolute;left:0;right:0;bottom:26px;display:flex;align-items:flex-end;justify-content:space-around;gap:4px;font-size:clamp(23px,3.5vw,42px);transform-origin:bottom;filter:drop-shadow(0 0 8px #1cba9c55)}
+.tank-plants span{display:inline-block;animation:plantSway 3.5s ease-in-out infinite alternate}
+.tank-plants span:nth-child(2n){animation-delay:-1.3s;transform-origin:bottom}
+.tank-plants span:nth-child(3n){animation-delay:-2.2s}
+.tank-floor{position:absolute;left:0;right:0;bottom:0;z-index:2}
+.floor-decor{display:block;text-align:center;line-height:34px;font-size:17px;letter-spacing:4px;opacity:.85}
+.tank-overlay{z-index:6!important;pointer-events:none}
+.tank-overlay b{color:#b8f8ff;font-size:.75em;letter-spacing:.08em}
+.tank-fish{z-index:3!important}
+.tank-fish .swim{filter:drop-shadow(0 3px 4px #00142177);font-size:clamp(21px,3.2vw,35px)}
+.tank-fish .f7{top:28%;left:15%;animation-duration:13s;animation-delay:-7s}
+.tank-fish .f8{top:66%;left:70%;animation-duration:17s;animation-delay:-4s}
+.tank-fish .f9{top:45%;left:38%;animation-duration:15s;animation-delay:-9s}
+.tank-fish .f10{top:18%;left:82%;animation-duration:12s;animation-delay:-2s}
+@keyframes plantSway{from{translate:0 0;rotate:-3deg}to{translate:2px -3px;rotate:4deg}}
+@media(max-width:560px){.tank-plants{font-size:23px}.tank-decor{font-size:23px}.floor-decor{font-size:12px;letter-spacing:0}}

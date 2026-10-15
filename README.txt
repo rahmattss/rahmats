@@ -17,3 +17,7 @@ CARA UPLOAD KE GITHUB PAGES:
 
 Website ini memakai HTML, CSS, dan JavaScript biasa, tanpa build tools.
 Beberapa ikon menggunakan emoji agar tetap ringan dan tanpa file gambar tambahan.
+
+Fitur tambahan versi revisi: Isi Ulang Makanan (+12 porsi, maksimum 60), Lampu Akuarium, Berburu Harta Karun, dan pelet makanan yang jatuh saat memberi makan.
+
+V3: dekorasi akuarium lebih ramai, 10 ikan awal (maksimal 14), kekeruhan air visual yang berubah seiring memberi makan, serta animasi pembersihan air yang terlihat jelas.

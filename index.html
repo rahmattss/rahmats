@@ -25,7 +25,7 @@
     <p>Rawat ikan virtual, beri mereka makan, ubah suasana akuarium, dan nikmati ketenangan lautan langsung dari browser.</p>
     <div class="hero-actions"><a class="primary-btn" href="#aquarium">▶ Mulai Jelajahi</a><button class="secondary-btn" id="feedHero">🐟 Beri Makan</button></div>
     <div class="stats">
-      <div><strong id="fishCount">6</strong><span>Ikan aktif</span></div>
+      <div><strong id="fishCount">10</strong><span>Ikan aktif</span></div>
       <div><strong id="foodCount">12</strong><span>Porsi makanan</span></div>
       <div><strong id="happyCount">100%</strong><span>Kebahagiaan</span></div>
     </div>
@@ -45,20 +45,26 @@
   <div class="section-heading"><div><span class="eyebrow">RUANG HIDUP IKANMU</span><h2>Akuarium <span>Utama</span></h2></div><p>Interaksi sederhana, suasana yang menenangkan.</p></div>
   <div class="aquarium-frame" id="tank">
     <div class="tank-rays"></div><div class="water-caustics"></div><div class="water-haze"></div><div class="tank-bubbles" id="tankBubbles"></div><div class="water-particles" id="waterParticles"></div>
+    <div class="water-dirt" id="waterDirt" aria-hidden="true"></div>
+    <div class="tank-decor decor-left">🪨 🐚</div><div class="tank-decor decor-right">🪸 💎</div>
     <div class="tank-fish" id="tankFish">
       <span class="swim f1">🐠</span><span class="swim f2">🐟</span><span class="swim f3">🐡</span><span class="swim f4">🐠</span><span class="swim f5">🐟</span><span class="swim f6">🐠</span>
+      <span class="swim extra-fish f7">🐟</span><span class="swim extra-fish f8">🐠</span><span class="swim extra-fish f9">🐡</span><span class="swim extra-fish f10">🐟</span>
     </div>
-    <div class="tank-plants">🌿　🪸　🌱　🌿　🪸　🌱　🌿</div>
-    <div class="tank-floor"></div>
-    <div class="tank-overlay"><span>AKUARIUM VIRTUAL</span><strong id="tankMessage">Ikan-ikanmu sedang berenang dengan bahagia.</strong></div>
+    <div class="tank-plants"><span>🌿</span><span>🌱</span><span>🪸</span><span>🌿</span><span>🪴</span><span>🪸</span><span>🌱</span><span>🌿</span><span>🪸</span></div>
+    <div class="tank-floor"><span class="floor-decor">🐚　🪨　✨　🐚　🪸　🪨　✨</span></div>
+    <div class="tank-overlay"><span>AKUARIUM VIRTUAL · <b id="waterStatus">AIR JERNIH</b></span><strong id="tankMessage">Ikan-ikanmu sedang berenang dengan bahagia.</strong></div>
   </div>
   <div class="control-grid">
     <button class="control-card" id="feedBtn"><span>🍤</span><b>Beri Makan Ikan</b><small>Sebarkan makanan ke dalam air</small></button>
     <button class="control-card" id="bubbleBtn"><span>🫧</span><b>Buat Gelembung</b><small>Tambahkan gelembung air</small></button>
     <button class="control-card" id="addFishBtn"><span>🐟</span><b>Tambah Ikan</b><small>Tambahkan penghuni baru</small></button>
     <button class="control-card" id="relaxBtn"><span>🌙</span><b>Mode Santai</b><small>Kurangi gangguan dan nikmati suasana</small></button>
-    <button class="control-card" id="cleanBtn"><span>🧽</span><b>Bersihkan Air</b><small>Jernihkan air dan rawat ekosistem</small></button>
+    <button class="control-card" id="cleanBtn"><span>🧽</span><b>Bersihkan Air</b><small>Lihat air keruh kembali jernih</small></button>
     <button class="control-card" id="soundBtn"><span>🔊</span><b>Suara Akuarium: Mati</b><small>Aktifkan ambience air dan efek suara</small></button>
+    <button class="control-card" id="refillBtn"><span>🥣</span><b>Isi Ulang Makanan</b><small>Tambah 12 porsi makanan ikan</small></button>
+    <button class="control-card" id="lampBtn"><span>💡</span><b>Lampu Akuarium: Nyala</b><small>Atur pencahayaan akuarium</small></button>
+    <button class="control-card" id="treasureBtn"><span>🪙</span><b>Berburu Harta Karun</b><small>Cari bonus di dasar akuarium</small></button>
   </div>
 </section>
 

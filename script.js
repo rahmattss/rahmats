@@ -1,20 +1,59 @@
 const $ = (id) => document.getElementById(id);
-let food = 12, fish = 6, happy = 100, clean = 95, relax = false, toastTimer;
-let audioCtx = null, soundEnabled = false, ambientTimer = null;
+let food = 12, fish = 10, happy = 100, clean = 95, relax = false, toastTimer;
+let audioCtx = null, soundEnabled = false, ambientTimer = null, lampOn = true;
 function audioReady(){if(!audioCtx){const AC=window.AudioContext||window.webkitAudioContext;if(AC)audioCtx=new AC()}if(audioCtx&&audioCtx.state==='suspended')audioCtx.resume();return audioCtx}
 function tone(freq=440,duration=.12,type='sine',volume=.035,slide=0){const ctx=audioReady();if(!ctx)return;const osc=ctx.createOscillator(),gain=ctx.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,ctx.currentTime);if(slide)osc.frequency.exponentialRampToValueAtTime(Math.max(25,freq+slide),ctx.currentTime+duration);gain.gain.setValueAtTime(.0001,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(volume,ctx.currentTime+.015);gain.gain.exponentialRampToValueAtTime(.0001,ctx.currentTime+duration);osc.connect(gain);gain.connect(ctx.destination);osc.start();osc.stop(ctx.currentTime+duration+.03)}
 function playSound(kind){if(!soundEnabled)return;if(kind==='feed'){tone(760,.12,'sine',.045,-250);setTimeout(()=>tone(420,.2,'triangle',.035,-120),90);setTimeout(()=>tone(620,.1,'sine',.025,120),180)}else if(kind==='bubble'){for(let i=0;i<4;i++)setTimeout(()=>tone(280+Math.random()*500,.18,'sine',.025,120),i*65)}else if(kind==='fish'){tone(540,.1,'sine',.03,180);setTimeout(()=>tone(820,.17,'sine',.03,-120),100)}else if(kind==='clean'){tone(320,.22,'triangle',.035,280);setTimeout(()=>tone(720,.24,'sine',.025,90),170)}}
 function ambientSound(){if(!soundEnabled||!audioCtx)return;const ctx=audioReady(),length=Math.floor(ctx.sampleRate*.8),buffer=ctx.createBuffer(1,length,ctx.sampleRate),data=buffer.getChannelData(0);for(let i=0;i<length;i++)data[i]=(Math.random()*2-1)*.12;const src=ctx.createBufferSource(),filter=ctx.createBiquadFilter(),gain=ctx.createGain();src.buffer=buffer;filter.type='lowpass';filter.frequency.value=420;gain.gain.value=.012;src.connect(filter);filter.connect(gain);gain.connect(ctx.destination);src.start();src.stop(ctx.currentTime+.8)}
 function toast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2600)}
-function updateStats(){$('foodCount').textContent=food;$('fishCount').textContent=fish;$('happyCount').textContent=happy+'%';$('cleanValue').textContent=clean+'%';$('cleanBar').style.width=clean+'%';$('moodLabel').textContent=happy>70?'Ekosistem sehat':happy>40?'Butuh perhatian':'Saatnya merawat';$('careTip').textContent=clean>75?'Kondisi akuarium terlihat sangat baik.':'Coba bersihkan akuarium dengan memberi gelembung dan merawat ikan.'}
-function feed(){if(food<=0){toast('Makanan habis! Tambah stok makanan dulu 🥣');return}food--;playSound('feed');happy=Math.min(100,happy+3);clean=Math.max(35,clean-1);updateStats();toast('🍤 Makanan ditebarkan! Ikan-ikanmu senang.');$('tankMessage').textContent='Nyam! Ikan-ikan sedang menikmati makanan.';for(let i=0;i<12;i++)makeBubble(true)}
+function updateStats(){
+  $('foodCount').textContent=food;$('fishCount').textContent=fish;$('happyCount').textContent=happy+'%';
+  $('cleanValue').textContent=clean+'%';$('cleanBar').style.width=clean+'%';
+  $('moodLabel').textContent=happy>70?'Ekosistem sehat':happy>40?'Butuh perhatian':'Saatnya merawat';
+  $('careTip').textContent=clean>75?'Kondisi akuarium terlihat sangat baik.':clean>45?'Air mulai keruh. Tekan Bersihkan Air untuk melihat perubahan.':'Air sangat keruh! Segera gunakan fitur Bersihkan Air.';
+  const tank=$('tank');tank.style.setProperty('--dirt-level',String((100-clean)/100*.78));
+  tank.classList.toggle('dirty-water',clean<75);
+  $('waterStatus').textContent=clean>75?'AIR JERNIH':clean>45?'AIR MULAI KERUH':'AIR SANGAT KERUH';
+  $('waterStatus').style.color=clean>75?'#b8f8ff':clean>45?'#f8df8b':'#ffb2a7';
+}
+function dropFood(){const pellet=document.createElement('i');pellet.className='food-pellet';pellet.style.left=(15+Math.random()*70)+'%';pellet.style.animationDuration=(1.8+Math.random()*1.4)+'s';$('tank').appendChild(pellet);setTimeout(()=>pellet.remove(),3500)}
+function feed(){if(food<=0){toast('Makanan habis! Tekan “Isi Ulang Makanan” 🥣');$('tankMessage').textContent='Stok makanan habis. Isi ulang sebelum memberi makan lagi.';return}food--;playSound('feed');happy=Math.min(100,happy+3);clean=Math.max(15,clean-7);updateStats();toast('🍤 Makanan ditebarkan! Ikan-ikanmu senang.');$('tankMessage').textContent='Nyam! Ikan-ikan sedang menikmati makanan.';for(let i=0;i<12;i++){makeBubble(true);dropFood()}}
 function makeBubble(foodBubble=false){const b=document.createElement('i');b.className='bubble';b.style.left=(Math.random()*96+2)+'%';b.style.animationDuration=(3+Math.random()*3)+'s';b.style.width=b.style.height=(5+Math.random()*9)+'px';$('tankBubbles').appendChild(b);setTimeout(()=>b.remove(),6500)}
 $('feedBtn').addEventListener('click',feed);$('feedHero').addEventListener('click',feed);
 $('bubbleBtn').addEventListener('click',()=>{playSound('bubble');for(let i=0;i<22;i++)setTimeout(()=>makeBubble(),i*70);clean=Math.min(100,clean+1);updateStats();toast('🫧 Gelembung baru memenuhi akuarium!')});
-$('addFishBtn').addEventListener('click',()=>{if(fish>=10){toast('Akuariummu sudah penuh! Maksimal 10 ikan.');return}fish++;playSound('fish');happy=Math.max(70,happy-1);const emojis=['🐠','🐟','🐡'];const el=document.createElement('span');el.className='swim';el.textContent=emojis[Math.floor(Math.random()*emojis.length)];el.style.top=(15+Math.random()*65)+'%';el.style.left=(5+Math.random()*80)+'%';el.style.animationDelay=(-Math.random()*8)+'s';$('tankFish').appendChild(el);updateStats();toast('🐟 Penghuni baru bergabung ke akuarium!')});
+$('addFishBtn').addEventListener('click',()=>{if(fish>=14){toast('Akuariummu sudah penuh! Maksimal 14 ikan.');return}fish++;playSound('fish');happy=Math.max(70,happy-1);const emojis=['🐠','🐟','🐡'];const el=document.createElement('span');el.className='swim';el.textContent=emojis[Math.floor(Math.random()*emojis.length)];el.style.top=(15+Math.random()*65)+'%';el.style.left=(5+Math.random()*80)+'%';el.style.animationDelay=(-Math.random()*8)+'s';$('tankFish').appendChild(el);updateStats();toast('🐟 Penghuni baru bergabung ke akuarium!')});
 
-$('cleanBtn').addEventListener('click',()=>{clean=Math.min(100,clean+12);happy=Math.min(100,happy+2);playSound('clean');updateStats();for(let i=0;i<14;i++)setTimeout(()=>makeBubble(),i*45);$('tankMessage').textContent='Air terasa lebih jernih. Ikan-ikan kembali nyaman.';toast('💧 Air berhasil dijernihkan!')});
+$('cleanBtn').addEventListener('click',()=>{
+  const before=clean;clean=Math.min(100,clean+35);happy=Math.min(100,happy+4);
+  $('tank').classList.remove('cleaning-water');void $('tank').offsetWidth;$('tank').classList.add('cleaning-water');
+  playSound('clean');updateStats();
+  for(let i=0;i<28;i++)setTimeout(()=>makeBubble(),i*45);
+  $('tankMessage').textContent=before<75?'✨ Air kembali jernih! Kotoran tersapu dan ikan lebih nyaman.':'💧 Air sudah segar dan terawat!';
+  toast('💧 Air dibersihkan! Kebersihan naik menjadi '+clean+'%.');
+  setTimeout(()=>$('tank').classList.remove('cleaning-water'),1900);
+});
 $('soundBtn').addEventListener('click',()=>{soundEnabled=!soundEnabled;$('soundBtn').querySelector('b').textContent='Suara Akuarium: '+(soundEnabled?'Aktif':'Mati');$('soundBtn').querySelector('span').textContent=soundEnabled?'🔊':'🔇';$('soundBtn').querySelector('small').textContent=soundEnabled?'Efek makan, gelembung, ikan, dan ambience air aktif':'Aktifkan ambience air dan efek suara';if(soundEnabled){audioReady();playSound('bubble');ambientSound();ambientTimer=setInterval(ambientSound,1300);toast('🔊 Suara akuarium diaktifkan.')}else{clearInterval(ambientTimer);ambientTimer=null;toast('🔇 Suara akuarium dimatikan.')}});
+
+
+$('refillBtn').addEventListener('click',()=>{
+  if(food>=60){toast('🥣 Stok makanan sudah penuh! Maksimal 60 porsi.');return}
+  food=Math.min(60,food+12);playSound('feed');updateStats();
+  $('tankMessage').textContent='Persediaan makanan sudah diisi ulang.';
+  toast('🥣 Berhasil isi ulang! Stok sekarang '+food+' porsi.');
+});
+$('lampBtn').addEventListener('click',()=>{
+  lampOn=!lampOn;$('tank').classList.toggle('lamp-off',!lampOn);
+  $('lampBtn').querySelector('b').textContent='Lampu Akuarium: '+(lampOn?'Nyala':'Redup');
+  $('lampBtn').querySelector('span').textContent=lampOn?'💡':'🌘';
+  $('tankMessage').textContent=lampOn?'Lampu akuarium menyala, ikan terlihat jelas.':'Lampu diredupkan untuk suasana malam yang tenang.';
+  toast(lampOn?'💡 Lampu akuarium dinyalakan.':'🌘 Pencahayaan diredupkan.');
+});
+$('treasureBtn').addEventListener('click',()=>{
+  const reward=Math.random();playSound('bubble');
+  if(reward<.65){const bonus=3+Math.floor(Math.random()*5);food=Math.min(60,food+bonus);updateStats();toast('🪙 Kamu menemukan '+bonus+' porsi makanan!');$('tankMessage').textContent='Harta karun ditemukan di antara pasir!';}
+  else{happy=Math.min(100,happy+5);clean=Math.min(100,clean+3);updateStats();toast('✨ Harta karun ajaib! Kebahagiaan ikan +5%.');$('tankMessage').textContent='Kilauan harta karun membuat ikan-ikan penasaran.';}
+  for(let i=0;i<8;i++)setTimeout(()=>makeBubble(),i*60);
+});
 
 $('relaxBtn').addEventListener('click',()=>{relax=!relax;document.body.classList.toggle('relax-mode',relax);$('relaxBtn').querySelector('b').textContent=relax?'Keluar Mode Santai':'Mode Santai';$('tankMessage').textContent=relax?'Tarik napas, rileks, dan nikmati lautan.':'Ikan-ikanmu sedang berenang dengan bahagia.';toast(relax?'🌙 Mode santai aktif. Nikmati suasana!':'Mode santai dinonaktifkan.')});
 $('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('light');const light=document.body.classList.contains('light');$('themeToggle').textContent=light?'☀ Mode Terang':'☾ Mode Malam';toast(light?'Mode terang diaktifkan ☀':'Mode malam diaktifkan 🌙')});
