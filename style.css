@@ -59,7 +59,7 @@ body.relax-mode .topbar nav,body.relax-mode .outline-btn{opacity:.45}body.relax-
 .tank-decor{position:absolute;z-index:2;bottom:30px;font-size:clamp(22px,3.6vw,42px);filter:drop-shadow(0 5px 6px #00101d88);opacity:.92}
 .decor-left{left:4%}.decor-right{right:5%;bottom:38px}
 .tank-plants{position:absolute;left:0;right:0;bottom:26px;display:flex;align-items:flex-end;justify-content:space-around;gap:4px;font-size:clamp(23px,3.5vw,42px);transform-origin:bottom;filter:drop-shadow(0 0 8px #1cba9c55)}
-.tank-plants span{display:inline-block;animation:plantSway 3.5s ease-in-out infinite alternate}
+.tank-plants span{display:inline-block;animation:plantSway 3.5s ease-in-out infinite alternate;touch-action:none}
 .tank-plants span:nth-child(2n){animation-delay:-1.3s;transform-origin:bottom}
 .tank-plants span:nth-child(3n){animation-delay:-2.2s}
 .tank-floor{position:absolute;left:0;right:0;bottom:0;z-index:2}
@@ -102,3 +102,53 @@ body.relax-mode .topbar nav,body.relax-mode .outline-btn{opacity:.45}body.relax-
 #moveFishBtn.active{border-color:#65e7ff;background:linear-gradient(135deg,#0b5878,#123c65);box-shadow:0 0 0 2px #65e7ff33}
 .move-fish-mode .tank-fish .swim{cursor:pointer!important;outline:2px dashed #ffe59a;outline-offset:4px;filter:drop-shadow(0 0 9px #ffe59a)!important;animation-duration:3s!important}
 .move-fish-mode .tank-fish .swim:hover{transform:scale(1.25);z-index:8}
+
+/* ===== Revisi berdasarkan kritik & saran (baris merah pada PDF) ===== */
+.quick-guide{padding-top:30px;padding-bottom:48px}
+.guide-heading{text-align:center;max-width:650px;margin:0 auto 22px}
+.guide-heading h2{font:700 clamp(1.8rem,3vw,2.5rem) 'Space Grotesk',sans-serif;margin:8px 0}
+.guide-heading h2 span{color:var(--blue)}
+.guide-heading p{color:var(--muted);margin:0}
+.guide-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.guide-steps article{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px}
+.guide-steps article>b{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:#159ed52a;color:var(--blue)}
+.guide-steps h3{margin:12px 0 5px;font-size:1rem}
+.guide-steps p{margin:0;color:var(--muted);font-size:.88rem}
+.control-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.control-card{min-height:128px}
+.control-card:focus-visible,.shop-item:focus-visible,.fish-card:focus-visible,.theme-card:focus-visible,.release-fish:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+.tank-fish{z-index:4;pointer-events:none}
+.tank-fish .swim{pointer-events:auto;touch-action:manipulation;user-select:none;-webkit-user-drag:none}
+.tank-fish .swim img{display:block;width:clamp(42px,6vw,76px);height:auto;pointer-events:none;filter:drop-shadow(0 5px 5px #0018)}
+.tank-overlay{pointer-events:none}
+.move-fish-mode .tank-fish{pointer-events:auto}
+.move-fish-mode .tank-fish .swim{cursor:pointer!important;outline:2px dashed #ffe59a;outline-offset:4px;filter:drop-shadow(0 0 9px #ffe59a)!important;animation-duration:5s!important}
+.move-fish-mode .tank-fish .swim:hover{transform:scale(1.2);z-index:8}
+.fish-card{display:flex;flex-direction:column;align-items:flex-start;gap:5px}
+.fish-card>img{width:100%;height:88px;object-fit:contain;padding:7px;background:linear-gradient(140deg,#0c5274,#092d4b);border-radius:12px}
+.fish-detail>img{width:82px;height:58px;object-fit:contain;flex:none}
+.shop-fish-image{display:block;width:62px;height:48px}
+.shop-fish-image img{width:100%;height:100%;object-fit:contain}
+.inventory-fish-image{width:62px;height:48px;object-fit:contain;flex:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.site-footer{padding:38px 5% 20px;background:#041a2b;border-top:1px solid var(--border);display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:28px}
+.footer-main p{max-width:420px;color:#a9c3d6;font-size:.88rem}
+.footer-column{display:flex;flex-direction:column;gap:9px;color:#b7cfdf;font-size:.88rem}
+.footer-column b{color:#f1f8ff;margin-bottom:4px}
+.footer-column a:hover,.footer-bottom a:hover{color:var(--blue)}
+.footer-bottom{grid-column:1/-1;border-top:1px solid #ffffff20;padding-top:16px;display:flex;justify-content:space-between;gap:12px;color:#a9c3d6;font-size:.8rem}
+body.light .control-card small,body.light .theme-card small,body.light .fish-card small,body.light .guide-steps p{color:#385a72}
+body.light .fish-detail p,body.light .hero-copy>p,body.light .care-copy p{color:#385a72}
+body.light .eyebrow{color:#006b9f}
+body.light .fish-card>img{background:linear-gradient(140deg,#c8eafa,#e7f7ff)}
+body.light .water-label,body.light .tank-overlay{text-shadow:0 1px 5px #001}
+body.light .site-footer{background:#0a2b45}
+@keyframes swim{0%{transform:translate3d(-10px,0,0) rotate(-3deg)}25%{transform:translate3d(15px,-8px,0) rotate(1deg)}50%{transform:translate3d(42px,-3px,0) rotate(3deg)}75%{transform:translate3d(22px,8px,0) rotate(0)}100%{transform:translate3d(-8px,2px,0) rotate(-2deg)}}
+@media(max-width:900px){.control-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.topbar nav{gap:10px;font-size:.8rem}.site-footer{grid-template-columns:1fr 1fr}.footer-main{grid-column:1/-1}}
+@media(max-width:620px){.guide-steps{grid-template-columns:1fr}.control-grid{grid-template-columns:1fr 1fr}.site-footer{grid-template-columns:1fr 1fr}.footer-bottom{flex-direction:column}.topbar{height:auto;min-height:68px;flex-wrap:wrap;padding:10px 4%}.topbar nav{order:3;width:100%;overflow-x:auto;padding:4px 0 8px}.topbar nav a{white-space:nowrap}.fish-card>img{height:72px}}
+@media(max-width:420px){.control-grid{grid-template-columns:1fr}.site-footer{grid-template-columns:1fr}.footer-main{grid-column:auto}}
+
+.hero-art .fish img{display:block;width:clamp(42px,6vw,78px);height:auto;filter:drop-shadow(0 5px 6px #0019)}
+
+.control-group-title{grid-column:1/-1;margin:12px 0 -3px;font:700 1rem 'Space Grotesk',sans-serif;color:var(--blue);padding-bottom:8px;border-bottom:1px solid var(--border)}
+.control-group-title:first-child{margin-top:0}

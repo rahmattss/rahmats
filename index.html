@@ -11,7 +11,7 @@
 <header class="topbar">
   <a class="brand" href="#"><span class="brand-icon">🐠</span> Virtual Aquarium</a>
   <nav>
-    <a href="#home">Beranda</a><a href="#aquarium">Akuarium</a><a href="#features">Fitur</a><a href="#fish">Koleksi Ikan</a><a href="#creator">Pembuat</a>
+    <a href="#home">Beranda</a><a href="#panduan">Panduan</a><a href="#aquarium">Akuarium</a><a href="#features">Fitur</a><a href="#fish">Koleksi Ikan</a><a href="#creator">Pembuat</a>
   </nav>
   <button id="themeToggle" class="outline-btn">☾ Mode Malam</button>
 </header>
@@ -34,10 +34,19 @@
     <div class="sun-rays"></div>
     <div class="jelly">🪼</div><div class="coral coral-a">🌿</div><div class="coral coral-b">🪸</div>
     <div class="ruins">🏛️</div>
-    <div class="fish fish-one">🐠</div><div class="fish fish-two">🐟</div><div class="fish fish-three">🐡</div>
-    <div class="fish fish-four">🐠</div><div class="fish fish-five">🐟</div><div class="fish fish-six">🐠</div>
+    <div class="fish fish-one"><img src="assets/clown.svg" alt="Ikan badut"></div><div class="fish fish-two"><img src="assets/tang.svg" alt="Blue tang"></div><div class="fish fish-three"><img src="assets/puffer.svg" alt="Ikan buntal"></div>
+    <div class="fish fish-four"><img src="assets/coral.svg" alt="Ikan karang"></div><div class="fish fish-five"><img src="assets/sardine.svg" alt="Ikan sardin"></div><div class="fish fish-six"><img src="assets/gold.svg" alt="Ikan mas"></div>
     <div class="sand"></div>
     <div class="water-label">● LIVE AQUARIUM <span>•</span> <span id="moodLabel">Ekosistem sehat</span></div>
+  </div>
+</section>
+
+<section class="section quick-guide" id="panduan">
+  <div class="guide-heading"><span class="eyebrow">MULAI DALAM 1 MENIT</span><h2>Panduan <span>Singkat</span></h2><p>Ikuti tiga langkah ini untuk mulai merawat akuarium virtualmu.</p></div>
+  <div class="guide-steps">
+    <article><b>01</b><h3>Jelajahi akuarium</h3><p>Lihat ikan yang sedang berenang dan pilih tema air yang kamu sukai.</p></article>
+    <article><b>02</b><h3>Beri makan & rawat</h3><p>Gunakan tombol Beri Makan, Bersihkan Air, dan Buat Gelembung untuk menjaga kondisi ikan.</p></article>
+    <article><b>03</b><h3>Koleksi ikan baru</h3><p>Beli ikan di Toko Akuarium, lalu tekan Masukkan pada Inventaris untuk melepasnya ke akuarium.</p></article>
   </div>
 </section>
 
@@ -48,23 +57,26 @@
     <div class="water-dirt" id="waterDirt" aria-hidden="true"></div>
     <div class="tank-decor decor-left" aria-label="Batu dan kerang">🪨 🐚</div><div class="tank-decor decor-right" aria-label="Karang dan mutiara">🪸 ✨</div>
     <div class="tank-fish" id="tankFish">
-      <span class="swim f1">🐠</span><span class="swim f2">🐟</span><span class="swim f3">🐡</span><span class="swim f4">🐠</span><span class="swim f5">🐟</span><span class="swim f6">🐠</span>
-      <span class="swim extra-fish f7">🐟</span><span class="swim extra-fish f8">🐠</span><span class="swim extra-fish f9">🐡</span><span class="swim extra-fish f10">🐟</span>
+      <span class="swim f1" data-fish-kind="clown"><img src="assets/clown.svg" alt="Ikan badut"></span><span class="swim f2" data-fish-kind="tang"><img src="assets/tang.svg" alt="Blue tang"></span><span class="swim f3" data-fish-kind="puffer"><img src="assets/puffer.svg" alt="Ikan buntal"></span><span class="swim f4" data-fish-kind="coral"><img src="assets/coral.svg" alt="Ikan karang"></span><span class="swim f5" data-fish-kind="sardine"><img src="assets/sardine.svg" alt="Ikan kecil"></span><span class="swim f6" data-fish-kind="gold"><img src="assets/gold.svg" alt="Ikan mas"></span>
+      <span class="swim extra-fish f7" data-fish-kind="tang"><img src="assets/tang.svg" alt="Blue tang"></span><span class="swim extra-fish f8" data-fish-kind="clown"><img src="assets/clown.svg" alt="Ikan badut"></span><span class="swim extra-fish f9" data-fish-kind="puffer"><img src="assets/puffer.svg" alt="Ikan buntal"></span><span class="swim extra-fish f10" data-fish-kind="gold"><img src="assets/gold.svg" alt="Ikan mas"></span>
     </div>
     <div class="tank-plants" aria-label="Rumput laut"><span>🌿</span><span>🌱</span><span>🌿</span><span>🪸</span><span>🌿</span><span>🌱</span><span>🌿</span><span>🪸</span><span>🌿</span></div>
     <div class="tank-floor"><span class="floor-decor">🐚　🪨　✨　🐚　🪸　🪨　✨</span></div>
     <div class="tank-overlay"><span>AKUARIUM VIRTUAL · <b id="waterStatus">AIR JERNIH</b></span><strong id="tankMessage">Ikan-ikanmu sedang berenang dengan bahagia.</strong></div>
   </div>
   <div class="control-grid">
-    <button class="control-card" id="feedBtn"><span>🍤</span><b>Beri Makan Ikan</b><small>Sebarkan makanan ke dalam air</small></button>
-    <button class="control-card" id="bubbleBtn"><span>🫧</span><b>Buat Gelembung</b><small>Tambahkan gelembung air</small></button>
-    <button class="control-card" id="addFishBtn"><span>🐟</span><b>Tambah Ikan</b><small>Tambahkan penghuni baru</small></button>
-    <button class="control-card" id="moveFishBtn"><span>🎒</span><b>Pindahkan Ikan ke Inventaris</b><small>Aktifkan lalu klik ikan yang ingin dikeluarkan</small></button>
-    <button class="control-card" id="relaxBtn"><span>🌙</span><b>Mode Santai</b><small>Kurangi gangguan dan nikmati suasana</small></button>
-    <button class="control-card" id="cleanBtn"><span>🧽</span><b>Bersihkan Air</b><small>Lihat air keruh kembali jernih</small></button>
-    <button class="control-card" id="soundBtn"><span>🔊</span><b>Suara Akuarium: Mati</b><small>Aktifkan ambience air dan efek suara</small></button>
-    <button class="control-card" id="lampBtn"><span>💡</span><b>Lampu Akuarium: Nyala</b><small>Atur pencahayaan akuarium</small></button>
-    <button class="control-card" id="treasureBtn"><span>🪙</span><b>Berburu Harta Karun</b><small>Cari bonus di dasar akuarium</small></button>
+    <h3 class="control-group-title">Perawatan Akuarium</h3>
+        <button class="control-card" id="feedBtn"><span>🍤</span><b>Beri Makan Ikan</b><small>Sebarkan makanan ke dalam air</small></button>
+        <button class="control-card" id="cleanBtn"><span>🧽</span><b>Bersihkan Air</b><small>Lihat air keruh kembali jernih</small></button>
+        <button class="control-card" id="bubbleBtn"><span>🫧</span><b>Buat Gelembung</b><small>Tambahkan gelembung air</small></button>
+        <button class="control-card" id="soundBtn"><span>🔊</span><b>Suara Akuarium: Mati</b><small>Aktifkan ambience air dan efek suara</small></button>
+    <h3 class="control-group-title">Pengelolaan Penghuni</h3>
+        <button class="control-card" id="addFishBtn"><span>🐟</span><b>Tambah Ikan</b><small>Tambahkan penghuni baru</small></button>
+        <button class="control-card" id="moveFishBtn"><span>🎒</span><b>Pindahkan Ikan ke Inventaris</b><small>Aktifkan lalu klik ikan yang ingin dikeluarkan</small></button>
+    <h3 class="control-group-title">Suasana & Eksplorasi</h3>
+        <button class="control-card" id="relaxBtn"><span>🌙</span><b>Mode Santai</b><small>Kurangi gangguan dan nikmati suasana</small></button>
+        <button class="control-card" id="lampBtn"><span>💡</span><b>Lampu Akuarium: Nyala</b><small>Atur pencahayaan akuarium</small></button>
+        <button class="control-card" id="treasureBtn"><span>🪙</span><b>Berburu Harta Karun</b><small>Cari bonus di dasar akuarium</small></button>
   </div>
 </section>
 
@@ -73,10 +85,12 @@
   <div class="game-dashboard">
     <div class="game-wallet"><span>🪙</span><div><small>Saldo koin</small><strong id="coinCount">30</strong></div><div class="hunger-box"><small>Kenyang ikan</small><strong id="hungerValue">100%</strong><div class="mini-bar"><i id="hungerBar" style="width:100%"></i></div></div></div>
     <div class="shop-card"><div class="shop-title"><span>🛒</span><div><b>Toko Akuarium</b><small>Beli penghuni baru dengan koin</small></div></div><div class="shop-items">
-      <button class="shop-item" data-shop="clown"><span>🐠</span><b>Ikan Badut</b><small>Harga: 10 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="puffer"><span>🐡</span><b>Ikan Buntal</b><small>Harga: 12 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="tang"><span>🐟</span><b>Blue Tang</b><small>Harga: 14 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="gold"><span>🐠</span><b>Ikan Mas</b><small>Harga: 8 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="clown"><span class="shop-fish-image"><img src="assets/clown.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Badut</b><small>Harga: 10 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="puffer"><span class="shop-fish-image"><img src="assets/puffer.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Buntal</b><small>Harga: 12 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="tang"><span class="shop-fish-image"><img src="assets/tang.svg" alt=""></span><span class="sr-only">ikan</span><b>Blue Tang</b><small>Harga: 14 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="gold"><span class="shop-fish-image"><img src="assets/gold.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Mas</b><small>Harga: 8 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="coral"><span class="shop-fish-image"><img src="assets/coral.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Karang</b><small>Harga: 11 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="sardine"><span class="shop-fish-image"><img src="assets/sardine.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Sardin</b><small>Harga: 9 🪙</small><em>Beli ikan</em></button>
       <button class="shop-item" data-shop="turtle"><span>🐢</span><b>Kura-kura</b><small>Harga: 18 🪙</small><em>Beli hewan</em></button>
       <button class="shop-item" data-shop="food"><span>🍤</span><b>Paket Pakan</b><small>Harga: 5 🪙</small><em>+10 porsi</em></button>
     </div></div>
@@ -108,14 +122,14 @@
 <section id="fish" class="section">
   <div class="section-heading"><div><span class="eyebrow">KENALI PENGHUNIMU</span><h2>Koleksi <span>Ikan</span></h2></div><p>Pilih ikan favorit untuk melihat detailnya.</p></div>
   <div class="fish-grid" id="fishGrid">
-    <button class="fish-card" data-name="Clownfish" data-desc="Ikan kecil berwarna oranye yang aktif dan ramah."><span>🐠</span><b>Clownfish</b><small>Aktif • Pemula</small></button>
-    <button class="fish-card" data-name="Blue Tang" data-desc="Ikan biru yang senang berenang menjelajahi akuarium."><span>🐟</span><b>Blue Tang</b><small>Jelajah • Sedang</small></button>
-    <button class="fish-card" data-name="Pufferfish" data-desc="Ikan unik yang menjadi pusat perhatian di akuarium."><span>🐡</span><b>Pufferfish</b><small>Unik • Pemula</small></button>
-    <button class="fish-card" data-name="Coral Fish" data-desc="Ikan karang yang suka berenang di sekitar tanaman."><span>🐠</span><b>Coral Fish</b><small>Tenang • Pemula</small></button>
-    <button class="fish-card" data-name="Little Sardine" data-desc="Ikan kecil yang tampak cantik ketika berenang bersama."><span>🐟</span><b>Little Sardine</b><small>Berkelompok • Mudah</small></button>
-    <button class="fish-card" data-name="Golden Fish" data-desc="Ikan keemasan yang menambah warna ceria di akuarium."><span>🐠</span><b>Golden Fish</b><small>Ceria • Pemula</small></button>
+    <button class="fish-card" data-name="Clownfish" data-kind="clown"><img src="assets/clown.svg" alt="Clownfish"><b>Clownfish</b><small>Aktif • Pemula</small></button>
+    <button class="fish-card" data-name="Blue Tang" data-kind="tang"><img src="assets/tang.svg" alt="Blue Tang"><b>Blue Tang</b><small>Jelajah • Sedang</small></button>
+    <button class="fish-card" data-name="Pufferfish" data-kind="puffer"><img src="assets/puffer.svg" alt="Pufferfish"><b>Pufferfish</b><small>Unik • Pemula</small></button>
+    <button class="fish-card" data-name="Coral Fish" data-kind="coral"><img src="assets/coral.svg" alt="Coral Fish"><b>Coral Fish</b><small>Tenang • Pemula</small></button>
+    <button class="fish-card" data-name="Little Sardine" data-kind="sardine"><img src="assets/sardine.svg" alt="Little Sardine"><b>Little Sardine</b><small>Berkelompok • Mudah</small></button>
+    <button class="fish-card" data-name="Golden Fish" data-kind="gold"><img src="assets/gold.svg" alt="Golden Fish"><b>Golden Fish</b><small>Ceria • Pemula</small></button>
   </div>
-  <div id="fishDetail" class="fish-detail" hidden><span id="detailEmoji">🐠</span><div><b id="detailName">Clownfish</b><p id="detailDesc"></p></div><button id="closeDetail" aria-label="Tutup detail">✕</button></div>
+  <div id="fishDetail" class="fish-detail" hidden><img id="detailEmoji" src="assets/clown.svg" alt="Ikan terpilih"><div><b id="detailName">Clownfish</b><p id="detailDesc"></p></div><button id="closeDetail" aria-label="Tutup detail">✕</button></div>
 </section>
 
 <section class="section care-section">
@@ -145,7 +159,12 @@
   </div>
 </section>
 
-<footer><a class="brand" href="#"><span>🐠</span> Virtual Aquarium</a><p>Dibuat untuk menemani waktu santaimu. <span>© 2026</span></p><a href="#home">Kembali ke atas ↑</a></footer>
+<footer class="site-footer">
+  <div class="footer-main"><a class="brand" href="#home"><span class="brand-icon">🐠</span> Virtual Aquarium</a><p>Simulasi akuarium digital untuk belajar mengenal ikan, merawat ekosistem, dan menikmati dunia bawah laut.</p></div>
+  <div class="footer-column"><b>Jelajahi</b><a href="#aquarium">Akuarium</a><a href="#game">Toko & Inventaris</a><a href="#fish">Koleksi Ikan</a></div>
+  <div class="footer-column"><b>Informasi</b><a href="#panduan">Panduan Pengguna</a><a href="#features">Tema Akuarium</a><a href="#creator">Tentang Pembuat</a></div>
+  <div class="footer-bottom"><span>© 2026 Virtual Aquarium · Proyek edukasi interaktif</span><a href="#home">Kembali ke atas ↑</a></div>
+</footer>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="script.js"></script>
