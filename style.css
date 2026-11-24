@@ -152,3 +152,12 @@ body.light .site-footer{background:#0a2b45}
 
 .control-group-title{grid-column:1/-1;margin:12px 0 -3px;font:700 1rem 'Space Grotesk',sans-serif;color:var(--blue);padding-bottom:8px;border-bottom:1px solid var(--border)}
 .control-group-title:first-child{margin-top:0}
+
+/* V9: inventory visibility, clearer realistic fish artwork, and focus feedback */
+.inventory-highlight{animation:inventoryPulse 1.35s ease}
+@keyframes inventoryPulse{0%,100%{box-shadow:0 0 0 0 #55dfff00}35%{box-shadow:0 0 0 4px #55dfff88,0 0 28px #55dfff44}}
+.tank-fish .swim img,.hero-art .fish img,.fish-card>img,.shop-fish-image img,.inventory-fish-image{image-rendering:auto;filter:drop-shadow(0 5px 6px #0019)}
+.tank-fish .swim img{width:clamp(52px,7vw,92px);max-height:72px;object-fit:contain}
+.fish-card>img{height:112px;object-fit:contain}
+.inventory-fish-image{width:76px;height:58px;object-fit:contain}
+@media(max-width:560px){.tank-fish .swim img{width:clamp(46px,12vw,72px)}.fish-card>img{height:88px}}

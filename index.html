@@ -34,8 +34,8 @@
     <div class="sun-rays"></div>
     <div class="jelly">🪼</div><div class="coral coral-a">🌿</div><div class="coral coral-b">🪸</div>
     <div class="ruins">🏛️</div>
-    <div class="fish fish-one"><img src="assets/clown.svg" alt="Ikan badut"></div><div class="fish fish-two"><img src="assets/tang.svg" alt="Blue tang"></div><div class="fish fish-three"><img src="assets/puffer.svg" alt="Ikan buntal"></div>
-    <div class="fish fish-four"><img src="assets/coral.svg" alt="Ikan karang"></div><div class="fish fish-five"><img src="assets/sardine.svg" alt="Ikan sardin"></div><div class="fish fish-six"><img src="assets/gold.svg" alt="Ikan mas"></div>
+    <div class="fish fish-one"><img src="assets/clown.png" alt="Ikan badut"></div><div class="fish fish-two"><img src="assets/tang.png" alt="Blue tang"></div><div class="fish fish-three"><img src="assets/puffer.png" alt="Ikan buntal"></div>
+    <div class="fish fish-four"><img src="assets/coral.png" alt="Ikan karang"></div><div class="fish fish-five"><img src="assets/sardine.png" alt="Ikan sardin"></div><div class="fish fish-six"><img src="assets/gold.png" alt="Ikan mas"></div>
     <div class="sand"></div>
     <div class="water-label">● LIVE AQUARIUM <span>•</span> <span id="moodLabel">Ekosistem sehat</span></div>
   </div>
@@ -57,8 +57,8 @@
     <div class="water-dirt" id="waterDirt" aria-hidden="true"></div>
     <div class="tank-decor decor-left" aria-label="Batu dan kerang">🪨 🐚</div><div class="tank-decor decor-right" aria-label="Karang dan mutiara">🪸 ✨</div>
     <div class="tank-fish" id="tankFish">
-      <span class="swim f1" data-fish-kind="clown"><img src="assets/clown.svg" alt="Ikan badut"></span><span class="swim f2" data-fish-kind="tang"><img src="assets/tang.svg" alt="Blue tang"></span><span class="swim f3" data-fish-kind="puffer"><img src="assets/puffer.svg" alt="Ikan buntal"></span><span class="swim f4" data-fish-kind="coral"><img src="assets/coral.svg" alt="Ikan karang"></span><span class="swim f5" data-fish-kind="sardine"><img src="assets/sardine.svg" alt="Ikan kecil"></span><span class="swim f6" data-fish-kind="gold"><img src="assets/gold.svg" alt="Ikan mas"></span>
-      <span class="swim extra-fish f7" data-fish-kind="tang"><img src="assets/tang.svg" alt="Blue tang"></span><span class="swim extra-fish f8" data-fish-kind="clown"><img src="assets/clown.svg" alt="Ikan badut"></span><span class="swim extra-fish f9" data-fish-kind="puffer"><img src="assets/puffer.svg" alt="Ikan buntal"></span><span class="swim extra-fish f10" data-fish-kind="gold"><img src="assets/gold.svg" alt="Ikan mas"></span>
+      <span class="swim f1" data-fish-kind="clown"><img src="assets/clown.png" alt="Ikan badut"></span><span class="swim f2" data-fish-kind="tang"><img src="assets/tang.png" alt="Blue tang"></span><span class="swim f3" data-fish-kind="puffer"><img src="assets/puffer.png" alt="Ikan buntal"></span><span class="swim f4" data-fish-kind="coral"><img src="assets/coral.png" alt="Ikan karang"></span><span class="swim f5" data-fish-kind="sardine"><img src="assets/sardine.png" alt="Ikan kecil"></span><span class="swim f6" data-fish-kind="gold"><img src="assets/gold.png" alt="Ikan mas"></span>
+      <span class="swim extra-fish f7" data-fish-kind="tang"><img src="assets/tang.png" alt="Blue tang"></span><span class="swim extra-fish f8" data-fish-kind="clown"><img src="assets/clown.png" alt="Ikan badut"></span><span class="swim extra-fish f9" data-fish-kind="puffer"><img src="assets/puffer.png" alt="Ikan buntal"></span><span class="swim extra-fish f10" data-fish-kind="gold"><img src="assets/gold.png" alt="Ikan mas"></span>
     </div>
     <div class="tank-plants" aria-label="Rumput laut"><span>🌿</span><span>🌱</span><span>🌿</span><span>🪸</span><span>🌿</span><span>🌱</span><span>🌿</span><span>🪸</span><span>🌿</span></div>
     <div class="tank-floor"><span class="floor-decor">🐚　🪨　✨　🐚　🪸　🪨　✨</span></div>
@@ -73,6 +73,7 @@
     <h3 class="control-group-title">Pengelolaan Penghuni</h3>
         <button class="control-card" id="addFishBtn"><span>🐟</span><b>Tambah Ikan</b><small>Tambahkan penghuni baru</small></button>
         <button class="control-card" id="moveFishBtn"><span>🎒</span><b>Pindahkan Ikan ke Inventaris</b><small>Aktifkan lalu klik ikan yang ingin dikeluarkan</small></button>
+        <button class="control-card" id="viewInventoryBtn"><span>📦</span><b>Lihat Inventaris Ikan</b><small>Buka daftar ikan dan stok yang tersedia</small></button>
     <h3 class="control-group-title">Suasana & Eksplorasi</h3>
         <button class="control-card" id="relaxBtn"><span>🌙</span><b>Mode Santai</b><small>Kurangi gangguan dan nikmati suasana</small></button>
         <button class="control-card" id="lampBtn"><span>💡</span><b>Lampu Akuarium: Nyala</b><small>Atur pencahayaan akuarium</small></button>
@@ -85,17 +86,17 @@
   <div class="game-dashboard">
     <div class="game-wallet"><span>🪙</span><div><small>Saldo koin</small><strong id="coinCount">30</strong></div><div class="hunger-box"><small>Kenyang ikan</small><strong id="hungerValue">100%</strong><div class="mini-bar"><i id="hungerBar" style="width:100%"></i></div></div></div>
     <div class="shop-card"><div class="shop-title"><span>🛒</span><div><b>Toko Akuarium</b><small>Beli penghuni baru dengan koin</small></div></div><div class="shop-items">
-      <button class="shop-item" data-shop="clown"><span class="shop-fish-image"><img src="assets/clown.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Badut</b><small>Harga: 10 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="puffer"><span class="shop-fish-image"><img src="assets/puffer.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Buntal</b><small>Harga: 12 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="tang"><span class="shop-fish-image"><img src="assets/tang.svg" alt=""></span><span class="sr-only">ikan</span><b>Blue Tang</b><small>Harga: 14 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="gold"><span class="shop-fish-image"><img src="assets/gold.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Mas</b><small>Harga: 8 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="coral"><span class="shop-fish-image"><img src="assets/coral.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Karang</b><small>Harga: 11 🪙</small><em>Beli ikan</em></button>
-      <button class="shop-item" data-shop="sardine"><span class="shop-fish-image"><img src="assets/sardine.svg" alt=""></span><span class="sr-only">ikan</span><b>Ikan Sardin</b><small>Harga: 9 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="clown"><span class="shop-fish-image"><img src="assets/clown.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Badut</b><small>Harga: 10 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="puffer"><span class="shop-fish-image"><img src="assets/puffer.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Buntal</b><small>Harga: 12 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="tang"><span class="shop-fish-image"><img src="assets/tang.png" alt=""></span><span class="sr-only">ikan</span><b>Blue Tang</b><small>Harga: 14 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="gold"><span class="shop-fish-image"><img src="assets/gold.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Mas</b><small>Harga: 8 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="coral"><span class="shop-fish-image"><img src="assets/coral.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Karang</b><small>Harga: 11 🪙</small><em>Beli ikan</em></button>
+      <button class="shop-item" data-shop="sardine"><span class="shop-fish-image"><img src="assets/sardine.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Sardin</b><small>Harga: 9 🪙</small><em>Beli ikan</em></button>
       <button class="shop-item" data-shop="turtle"><span>🐢</span><b>Kura-kura</b><small>Harga: 18 🪙</small><em>Beli hewan</em></button>
       <button class="shop-item" data-shop="food"><span>🍤</span><b>Paket Pakan</b><small>Harga: 5 🪙</small><em>+10 porsi</em></button>
     </div></div>
     <div class="inventory-card">
-      <div class="shop-title"><span>🎒</span><div><b>Inventaris Ikan</b><small>Ikan yang sudah dibeli tetapi belum dilepas ke akuarium</small></div></div>
+      <div class="shop-title"><span>🎒</span><div><b>Inventaris Ikan</b><small>Daftar ikan yang tersedia, termasuk ikan hasil pemindahan dari akuarium</small></div></div>
       <div id="fishInventory" class="fish-inventory"></div>
       <div class="stock-line">🐟 Kapasitas akuarium: <b id="tankCapacity">10 / 14</b> · Stok ikan tersedia: <b id="stockTotal">0</b></div>
     </div>
@@ -122,14 +123,14 @@
 <section id="fish" class="section">
   <div class="section-heading"><div><span class="eyebrow">KENALI PENGHUNIMU</span><h2>Koleksi <span>Ikan</span></h2></div><p>Pilih ikan favorit untuk melihat detailnya.</p></div>
   <div class="fish-grid" id="fishGrid">
-    <button class="fish-card" data-name="Clownfish" data-kind="clown"><img src="assets/clown.svg" alt="Clownfish"><b>Clownfish</b><small>Aktif • Pemula</small></button>
-    <button class="fish-card" data-name="Blue Tang" data-kind="tang"><img src="assets/tang.svg" alt="Blue Tang"><b>Blue Tang</b><small>Jelajah • Sedang</small></button>
-    <button class="fish-card" data-name="Pufferfish" data-kind="puffer"><img src="assets/puffer.svg" alt="Pufferfish"><b>Pufferfish</b><small>Unik • Pemula</small></button>
-    <button class="fish-card" data-name="Coral Fish" data-kind="coral"><img src="assets/coral.svg" alt="Coral Fish"><b>Coral Fish</b><small>Tenang • Pemula</small></button>
-    <button class="fish-card" data-name="Little Sardine" data-kind="sardine"><img src="assets/sardine.svg" alt="Little Sardine"><b>Little Sardine</b><small>Berkelompok • Mudah</small></button>
-    <button class="fish-card" data-name="Golden Fish" data-kind="gold"><img src="assets/gold.svg" alt="Golden Fish"><b>Golden Fish</b><small>Ceria • Pemula</small></button>
+    <button class="fish-card" data-name="Clownfish" data-kind="clown"><img src="assets/clown.png" alt="Clownfish"><b>Clownfish</b><small>Aktif • Pemula</small></button>
+    <button class="fish-card" data-name="Blue Tang" data-kind="tang"><img src="assets/tang.png" alt="Blue Tang"><b>Blue Tang</b><small>Jelajah • Sedang</small></button>
+    <button class="fish-card" data-name="Pufferfish" data-kind="puffer"><img src="assets/puffer.png" alt="Pufferfish"><b>Pufferfish</b><small>Unik • Pemula</small></button>
+    <button class="fish-card" data-name="Coral Fish" data-kind="coral"><img src="assets/coral.png" alt="Coral Fish"><b>Coral Fish</b><small>Tenang • Pemula</small></button>
+    <button class="fish-card" data-name="Little Sardine" data-kind="sardine"><img src="assets/sardine.png" alt="Little Sardine"><b>Little Sardine</b><small>Berkelompok • Mudah</small></button>
+    <button class="fish-card" data-name="Golden Fish" data-kind="gold"><img src="assets/gold.png" alt="Golden Fish"><b>Golden Fish</b><small>Ceria • Pemula</small></button>
   </div>
-  <div id="fishDetail" class="fish-detail" hidden><img id="detailEmoji" src="assets/clown.svg" alt="Ikan terpilih"><div><b id="detailName">Clownfish</b><p id="detailDesc"></p></div><button id="closeDetail" aria-label="Tutup detail">✕</button></div>
+  <div id="fishDetail" class="fish-detail" hidden><img id="detailEmoji" src="assets/clown.png" alt="Ikan terpilih"><div><b id="detailName">Clownfish</b><p id="detailDesc"></p></div><button id="closeDetail" aria-label="Tutup detail">✕</button></div>
 </section>
 
 <section class="section care-section">

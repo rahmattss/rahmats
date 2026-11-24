@@ -16,8 +16,11 @@ CARA UPLOAD KE GITHUB PAGES:
 8. Tunggu sebentar, lalu buka link GitHub Pages yang muncul.
 
 Website ini memakai HTML, CSS, dan JavaScript biasa, tanpa build tools.
-Beberapa ikon menggunakan emoji agar tetap ringan dan tanpa file gambar tambahan.
+Gambar ikan realistis tersedia di folder assets dalam format PNG transparan.
 
 Fitur tambahan versi revisi: Isi Ulang Makanan (+12 porsi, maksimum 60), Lampu Akuarium, Berburu Harta Karun, dan pelet makanan yang jatuh saat memberi makan.
 
 V3: dekorasi akuarium lebih ramai, 10 ikan awal (maksimal 14), kekeruhan air visual yang berubah seiring memberi makan, serta animasi pembersihan air yang terlihat jelas.
+
+
+V9: tombol Lihat Inventaris Ikan, pemindahan ikan dari akuarium ke inventaris yang tersimpan otomatis, gambar ikan PNG lebih realistis, serta ambience suara air kontinu.
