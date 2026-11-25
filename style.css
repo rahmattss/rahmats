@@ -161,3 +161,8 @@ body.light .site-footer{background:#0a2b45}
 .fish-card>img{height:112px;object-fit:contain}
 .inventory-fish-image{width:76px;height:58px;object-fit:contain}
 @media(max-width:560px){.tank-fish .swim img{width:clamp(46px,12vw,72px)}.fish-card>img{height:88px}}
+
+/* Update: interaksi klik ikan dan ubur-ubur */
+@keyframes fishDart{0%{transform:translateX(0) translateY(0) scale(1)}18%{transform:translateX(42px) translateY(-18px) scale(1.18)}38%{transform:translateX(-55px) translateY(13px) scale(1.08)}60%{transform:translateX(38px) translateY(-10px) scale(1.15)}82%{transform:translateX(-25px) translateY(8px) scale(1.05)}100%{transform:translateX(0) translateY(0) scale(1)}}
+.tank-fish .swim.darting{animation:fishDart 1.2s ease-in-out!important;filter:drop-shadow(0 0 12px #ffe99a)!important;z-index:10}
+.tank-fish .swim.darting img{filter:brightness(1.18) drop-shadow(0 0 8px #fff0a8)}

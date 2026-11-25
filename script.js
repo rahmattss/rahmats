@@ -60,7 +60,7 @@ function feed(){if(food<=0){toast('Makanan habis! Tekan “Isi Ulang Makanan” 
 function makeBubble(foodBubble=false){const b=document.createElement('i');b.className='bubble';b.style.left=(Math.random()*96+2)+'%';b.style.animationDuration=(3+Math.random()*3)+'s';b.style.width=b.style.height=(5+Math.random()*9)+'px';$('tankBubbles').appendChild(b);setTimeout(()=>b.remove(),6500)}
 $('feedBtn').addEventListener('click',feed);$('feedHero').addEventListener('click',feed);
 $('bubbleBtn').addEventListener('click',()=>{playSound('bubble');for(let i=0;i<22;i++)setTimeout(()=>makeBubble(),i*70);clean=Math.min(100,clean+1);updateStats();toast('🫧 Gelembung baru memenuhi akuarium!')});
-$('addFishBtn').addEventListener('click',()=>{if(fish>=14){toast('Akuariummu sudah penuh! Maksimal 14 ikan.');return}fish++;playSound('fish');happy=Math.max(70,happy-1);const kinds=['clown','tang','puffer','gold','coral','sardine'];const kind=kinds[Math.floor(Math.random()*kinds.length)];const el=makeFishNode(kind);$('tankFish').appendChild(el);updateStats();toast('🐟 Penghuni baru bergabung ke akuarium!')});
+$('addFishBtn').addEventListener('click',()=>{if(fish>=14){toast('Akuariummu sudah penuh! Maksimal 14 ikan.');return}fish++;playSound('fish');happy=Math.max(70,happy-1);const kinds=['clown','tang','puffer','gold','coral','sardine','jellyfish'];const kind=kinds[Math.floor(Math.random()*kinds.length)];const el=makeFishNode(kind);$('tankFish').appendChild(el);updateStats();toast('🐟 Penghuni baru bergabung ke akuarium!')});
 
 $('cleanBtn').addEventListener('click',()=>{
   const before=clean;clean=Math.min(100,clean+35);happy=Math.min(100,happy+4);
@@ -102,8 +102,8 @@ $('treasureBtn').addEventListener('click',()=>{
 $('relaxBtn').addEventListener('click',()=>{relax=!relax;document.body.classList.toggle('relax-mode',relax);$('relaxBtn').querySelector('b').textContent=relax?'Keluar Mode Santai':'Mode Santai';$('tankMessage').textContent=relax?'Tarik napas, rileks, dan nikmati lautan.':'Ikan-ikanmu sedang berenang dengan bahagia.';toast(relax?'🌙 Mode santai aktif. Nikmati suasana!':'Mode santai dinonaktifkan.')});
 $('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('light');const light=document.body.classList.contains('light');$('themeToggle').textContent=light?'☀ Mode Terang':'☾ Mode Malam';toast(light?'Mode terang diaktifkan ☀':'Mode malam diaktifkan 🌙')});
 document.querySelectorAll('.theme-card').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.theme-card').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const t=btn.dataset.theme;const tank=$('tank'), art=document.querySelector('.hero-art');const palettes={tropical:['#1595be','#075078','#042239'],deep:['#5550a3','#18234f','#020a22'],coral:['#f4a56d','#b84b70','#401d4e'],mint:['#80e5cb','#168c9b','#063d5d']};const p=palettes[t];tank.style.background=`radial-gradient(ellipse at 45% 0%,${p[0]},${p[1]} 48%,${p[2]})`;art.style.background=`radial-gradient(ellipse at 48% 8%,${p[0]},transparent 32%),linear-gradient(180deg,${p[1]},${p[2]} 100%)`;toast('Tema '+btn.querySelector('b').textContent.replace(/^\\S+\\s/,'')+' berhasil diterapkan!')}));
-const details={Clownfish:['🐠','Ikan kecil berwarna oranye yang aktif dan ramah.'], 'Blue Tang':['🐟','Ikan biru yang senang berenang menjelajahi akuarium.'],Pufferfish:['🐡','Ikan unik yang menjadi pusat perhatian di akuarium.'],'Coral Fish':['🐠','Ikan karang yang suka berenang di sekitar tanaman.'],'Little Sardine':['🐟','Ikan kecil yang tampak cantik ketika berenang bersama.'],'Golden Fish':['🐠','Ikan keemasan yang menambah warna ceria di akuarium.']};
-document.querySelectorAll('.fish-card').forEach(btn=>btn.addEventListener('click',()=>{const name=btn.dataset.name;const d=details[name];const fishImage=btn.dataset.kind||'clown';$('detailEmoji').src='assets/'+fishImage+'.png';$('detailEmoji').alt=name;$('detailName').textContent=name;$('detailDesc').textContent=d[1];$('fishDetail').hidden=false;$('fishDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}));
+const details={Clownfish:['🐠','Ikan kecil berwarna oranye yang aktif dan ramah.'], 'Blue Tang':['🐟','Ikan biru yang senang berenang menjelajahi akuarium.'],Pufferfish:['🐡','Ikan unik yang menjadi pusat perhatian di akuarium.'],'Coral Fish':['🐠','Ikan karang yang suka berenang di sekitar tanaman.'],'Little Sardine':['🐟','Ikan kecil yang tampak cantik ketika berenang bersama.'],'Golden Fish':['🐠','Ikan keemasan yang menambah warna ceria di akuarium.'],'Sea Turtle':['🐢','Kura-kura laut yang berenang perlahan dan menambah suasana tenang.'],'Jellyfish':['🪼','Ubur-ubur dengan tubuh transparan yang bergerak lembut mengikuti arus air.']};
+document.querySelectorAll('.fish-card').forEach(btn=>btn.addEventListener('click',()=>{const name=btn.dataset.name;const d=details[name];const fishImage=btn.dataset.kind||'clown';$('detailEmoji').src='assets/'+fishImage+(fishImage==='jellyfish'?'.svg':'.png');$('detailEmoji').alt=name;$('detailName').textContent=name;$('detailDesc').textContent=d[1];$('fishDetail').hidden=false;$('fishDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}));
 $('closeDetail').addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();$('fishDetail').hidden=true;});
 $('fishDetail').addEventListener('click',e=>{if(e.target===$('fishDetail'))$('fishDetail').hidden=true;});
 for(let i=0;i<18;i++)setTimeout(()=>makeBubble(),i*280);
@@ -120,22 +120,23 @@ const fishTypes = {
   gold:{name:'Ikan Mas',emoji:'🐠',image:'gold',price:8},
   turtle:{name:'Kura-kura',emoji:'🐢',image:'turtle',price:18},
   coral:{name:'Ikan Karang',emoji:'🐠',image:'coral',price:11},
-  sardine:{name:'Ikan Sardin',emoji:'🐟',image:'sardine',price:9}
+  sardine:{name:'Ikan Sardin',emoji:'🐟',image:'sardine',price:9},
+  jellyfish:{name:'Ubur-ubur',emoji:'🪼',image:'jellyfish',price:16}
 };
 function makeFishNode(kind, className='swim'){
   const type=fishTypes[kind]||fishTypes.clown;
   const el=document.createElement('span');
   el.className=className;el.dataset.fishKind=kind;
   const img=document.createElement('img');
-  img.src='assets/'+type.image+'.png';img.alt=type.name;img.draggable=false;
+  img.src='assets/'+type.image+(kind==='jellyfish'?'.svg':'.png');img.alt=type.name;img.draggable=false;
   el.appendChild(img);
-  el.addEventListener('click',e=>{if(moveFishMode){e.preventDefault();e.stopPropagation();moveFishToInventory(el)}});
+  el.addEventListener('click',e=>{if(moveFishMode){e.preventDefault();e.stopPropagation();moveFishToInventory(el);return;}el.classList.remove('darting');void el.offsetWidth;el.classList.add('darting');setTimeout(()=>el.classList.remove('darting'),1250);});
   el.style.top=(12+Math.random()*65)+'%';
   el.style.left=(5+Math.random()*80)+'%';
   el.style.animationDelay=(-Math.random()*8)+'s';
   return el;
 }
-let fishInventory = {clown:0,puffer:0,tang:0,gold:0,turtle:0,coral:0,sardine:0};
+let fishInventory = {clown:0,puffer:0,tang:0,gold:0,turtle:0,coral:0,sardine:0,jellyfish:0};
 const missionDone = {feed:false, clean:false, bubble:false};
 const MISSION_INTERVAL = 24 * 60 * 60 * 1000;
 let missionResetAt = Date.now();
@@ -176,7 +177,7 @@ function renderInventory(){
   const box=$('fishInventory');if(!box)return;box.innerHTML='';let total=0;
   Object.entries(fishTypes).forEach(([key,item])=>{const count=Number(fishInventory[key]||0);total+=count;if(!count)return;
     const row=document.createElement('div');row.className='inventory-item';
-    row.innerHTML=`<img class="inventory-fish-image" src="assets/${item.image}.png" alt="${item.name}"><div class="inventory-copy"><b>${item.name}</b><small>Stok: ${count}</small></div><button class="release-fish" data-release="${key}" ${fish>=14?'disabled':''}>Masukkan</button>`;box.appendChild(row);
+    row.innerHTML=`<img class="inventory-fish-image" src="assets/${item.image}${key==='jellyfish'?'.svg':'.png'}" alt="${item.name}"><div class="inventory-copy"><b>${item.name}</b><small>Stok: ${count}</small></div><button class="release-fish" data-release="${key}" ${fish>=14?'disabled':''}>Masukkan</button>`;box.appendChild(row);
   });
   if(!total)box.innerHTML='<p class="inventory-empty">Inventaris masih kosong. Beli ikan di Toko Akuarium atau aktifkan “Pindahkan Ikan ke Inventaris”, lalu klik ikan di akuarium.</p>';
   $('tankCapacity').textContent=fish+' / 14';$('stockTotal').textContent=total;
@@ -240,17 +241,18 @@ function moveFishToInventory(el){
 function kindFromEmoji(emoji){
   if(emoji==='🐡') return 'puffer';
   if(emoji==='🐢') return 'turtle';
+  if(emoji==='🪼') return 'jellyfish';
   if(emoji==='🐟') return 'tang';
   return 'clown';
 }
 function setupTankFishKinds(){
   const initial=['clown','tang','puffer','clown','tang','clown','tang','clown','puffer','tang'];
   [...$('tankFish').querySelectorAll('.swim')].forEach((el,i)=>{
-    if(!el.dataset.fishKind){const src=el.querySelector('img')?.getAttribute('src')||'';const match=src.match(/assets\/(clown|tang|puffer|gold|coral|sardine|turtle)\./);el.dataset.fishKind=match?match[1]:(initial[i]||'clown');}
+    if(!el.dataset.fishKind){const src=el.querySelector('img')?.getAttribute('src')||'';const match=src.match(/assets\/(clown|tang|puffer|gold|coral|sardine|turtle|jellyfish)\./);el.dataset.fishKind=match?match[1]:(initial[i]||'clown');}
     el.title=moveFishMode?'Klik ikan ini untuk memindahkannya ke inventaris':'';
     if(!el.dataset.moveHandlerBound){
       el.dataset.moveHandlerBound='1';
-      el.addEventListener('click',e=>{if(moveFishMode){e.preventDefault();e.stopPropagation();moveFishToInventory(el)}});
+      el.addEventListener('click',e=>{if(moveFishMode){e.preventDefault();e.stopPropagation();moveFishToInventory(el);return;}el.classList.remove('darting');void el.offsetWidth;el.classList.add('darting');setTimeout(()=>el.classList.remove('darting'),1250);});
     }
   });
 }
@@ -275,6 +277,15 @@ if(moveFishBtn){
   });
 }
 // Pastikan ikan baru juga memiliki jenis yang dapat dipindahkan kembali.
+// Tombol cepat: simpan ikan terakhir tanpa perlu mengaktifkan mode lalu mencari ikan.
+$('quickStoreFishBtn')?.addEventListener('click',()=>{
+  const fishes=[...$('tankFish').querySelectorAll('.swim')];
+  if(!fishes.length){toast('Belum ada ikan di akuarium.');return;}
+  const el=fishes[fishes.length-1],kind=el.dataset.fishKind||'clown';
+  fishInventory[kind]=(Number(fishInventory[kind])||0)+1;
+  el.remove();fish=Math.max(0,fish-1);updateStats();updateGameUI();playSound('fish');
+  toast('🎒 '+fishTypes[kind].name+' langsung masuk inventaris!');
+});
 const originalAddFishToTankV8=addFishToTank;
 addFishToTank=function(kind){originalAddFishToTankV8(kind);const el=[...$('tankFish').querySelectorAll('.swim')].at(-1);if(el)el.dataset.fishKind=kind;setupTankFishKinds();};
 // Efek klik universal agar tombol yang sebelumnya belum bersuara tetap konsisten.

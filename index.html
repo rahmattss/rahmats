@@ -72,7 +72,7 @@
         <button class="control-card" id="soundBtn"><span>🔊</span><b>Suara Akuarium: Mati</b><small>Aktifkan ambience air dan efek suara</small></button>
     <h3 class="control-group-title">Pengelolaan Penghuni</h3>
         <button class="control-card" id="addFishBtn"><span>🐟</span><b>Tambah Ikan</b><small>Tambahkan penghuni baru</small></button>
-        <button class="control-card" id="moveFishBtn"><span>🎒</span><b>Pindahkan Ikan ke Inventaris</b><small>Aktifkan lalu klik ikan yang ingin dikeluarkan</small></button>
+        <button class="control-card" id="quickStoreFishBtn"><span>📥</span><b>Simpan Ikan ke Inventaris</b><small>Satu klik untuk menyimpan ikan terakhir</small></button>
         <button class="control-card" id="viewInventoryBtn"><span>📦</span><b>Lihat Inventaris Ikan</b><small>Buka daftar ikan dan stok yang tersedia</small></button>
     <h3 class="control-group-title">Suasana & Eksplorasi</h3>
         <button class="control-card" id="relaxBtn"><span>🌙</span><b>Mode Santai</b><small>Kurangi gangguan dan nikmati suasana</small></button>
@@ -93,6 +93,7 @@
       <button class="shop-item" data-shop="coral"><span class="shop-fish-image"><img src="assets/coral.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Karang</b><small>Harga: 11 🪙</small><em>Beli ikan</em></button>
       <button class="shop-item" data-shop="sardine"><span class="shop-fish-image"><img src="assets/sardine.png" alt=""></span><span class="sr-only">ikan</span><b>Ikan Sardin</b><small>Harga: 9 🪙</small><em>Beli ikan</em></button>
       <button class="shop-item" data-shop="turtle"><span>🐢</span><b>Kura-kura</b><small>Harga: 18 🪙</small><em>Beli hewan</em></button>
+      <button class="shop-item" data-shop="jellyfish"><span class="shop-fish-image"><img src="assets/jellyfish.svg" alt=""></span><b>Ubur-ubur</b><small>Harga: 16 🪙</small><em>Beli hewan</em></button>
       <button class="shop-item" data-shop="food"><span>🍤</span><b>Paket Pakan</b><small>Harga: 5 🪙</small><em>+10 porsi</em></button>
     </div></div>
     <div class="inventory-card">
@@ -129,6 +130,8 @@
     <button class="fish-card" data-name="Coral Fish" data-kind="coral"><img src="assets/coral.png" alt="Coral Fish"><b>Coral Fish</b><small>Tenang • Pemula</small></button>
     <button class="fish-card" data-name="Little Sardine" data-kind="sardine"><img src="assets/sardine.png" alt="Little Sardine"><b>Little Sardine</b><small>Berkelompok • Mudah</small></button>
     <button class="fish-card" data-name="Golden Fish" data-kind="gold"><img src="assets/gold.png" alt="Golden Fish"><b>Golden Fish</b><small>Ceria • Pemula</small></button>
+    <button class="fish-card" data-name="Sea Turtle" data-kind="turtle"><img src="assets/turtle.png" alt="Sea Turtle"><b>Sea Turtle</b><small>Tenang • Sedang</small></button>
+    <button class="fish-card" data-name="Jellyfish" data-kind="jellyfish"><img src="assets/jellyfish.svg" alt="Jellyfish"><b>Jellyfish</b><small>Lembut • Unik</small></button>
   </div>
   <div id="fishDetail" class="fish-detail" hidden><img id="detailEmoji" src="assets/clown.png" alt="Ikan terpilih"><div><b id="detailName">Clownfish</b><p id="detailDesc"></p></div><button id="closeDetail" aria-label="Tutup detail">✕</button></div>
 </section>
