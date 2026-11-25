@@ -178,3 +178,10 @@ body.light .site-footer{background:#0a2b45}
 #tankFish .swim.darting img {
   filter: brightness(1.25) drop-shadow(0 0 10px #fff0a8) !important;
 }
+
+/* Koleksi ikan: deskripsi per kartu dengan tombol panah */
+.fish-entry{min-width:0}
+.fish-card{position:relative;cursor:pointer;width:100%;padding-bottom:30px}
+.fish-card .fish-desc-arrow{position:absolute;bottom:8px;right:12px;font-size:1.15rem;color:var(--blue);font-weight:800;line-height:1}
+.fish-card-description{margin-top:7px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:var(--panel2);color:var(--muted);font-size:.8rem;line-height:1.5}
+.fish-card-description[hidden]{display:none}

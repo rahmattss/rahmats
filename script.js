@@ -102,10 +102,14 @@ $('treasureBtn').addEventListener('click',()=>{
 $('relaxBtn').addEventListener('click',()=>{relax=!relax;document.body.classList.toggle('relax-mode',relax);$('relaxBtn').querySelector('b').textContent=relax?'Keluar Mode Santai':'Mode Santai';$('tankMessage').textContent=relax?'Tarik napas, rileks, dan nikmati lautan.':'Ikan-ikanmu sedang berenang dengan bahagia.';toast(relax?'🌙 Mode santai aktif. Nikmati suasana!':'Mode santai dinonaktifkan.')});
 $('themeToggle').addEventListener('click',()=>{document.body.classList.toggle('light');const light=document.body.classList.contains('light');$('themeToggle').textContent=light?'☀ Mode Terang':'☾ Mode Malam';toast(light?'Mode terang diaktifkan ☀':'Mode malam diaktifkan 🌙')});
 document.querySelectorAll('.theme-card').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.theme-card').forEach(x=>x.classList.remove('active'));btn.classList.add('active');const t=btn.dataset.theme;const tank=$('tank'), art=document.querySelector('.hero-art');const palettes={tropical:['#1595be','#075078','#042239'],deep:['#5550a3','#18234f','#020a22'],coral:['#f4a56d','#b84b70','#401d4e'],mint:['#80e5cb','#168c9b','#063d5d']};const p=palettes[t];tank.style.background=`radial-gradient(ellipse at 45% 0%,${p[0]},${p[1]} 48%,${p[2]})`;art.style.background=`radial-gradient(ellipse at 48% 8%,${p[0]},transparent 32%),linear-gradient(180deg,${p[1]},${p[2]} 100%)`;toast('Tema '+btn.querySelector('b').textContent.replace(/^\\S+\\s/,'')+' berhasil diterapkan!')}));
-const details={Clownfish:['🐠','Ikan kecil berwarna oranye yang aktif dan ramah.'], 'Blue Tang':['🐟','Ikan biru yang senang berenang menjelajahi akuarium.'],Pufferfish:['🐡','Ikan unik yang menjadi pusat perhatian di akuarium.'],'Coral Fish':['🐠','Ikan karang yang suka berenang di sekitar tanaman.'],'Little Sardine':['🐟','Ikan kecil yang tampak cantik ketika berenang bersama.'],'Golden Fish':['🐠','Ikan keemasan yang menambah warna ceria di akuarium.'],'Sea Turtle':['🐢','Kura-kura laut yang berenang perlahan dan menambah suasana tenang.'],'Jellyfish':['🪼','Ubur-ubur dengan tubuh transparan yang bergerak lembut mengikuti arus air.']};
-document.querySelectorAll('.fish-card').forEach(btn=>btn.addEventListener('click',()=>{const name=btn.dataset.name;const d=details[name];const fishImage=btn.dataset.kind||'clown';$('detailEmoji').src='assets/'+fishImage+(fishImage==='jellyfish'?'.svg':'.png');$('detailEmoji').alt=name;$('detailName').textContent=name;$('detailDesc').textContent=d[1];$('fishDetail').hidden=false;$('fishDetail').scrollIntoView({behavior:'smooth',block:'nearest'})}));
-$('closeDetail').addEventListener('click',(e)=>{e.preventDefault();e.stopPropagation();$('fishDetail').hidden=true;});
-$('fishDetail').addEventListener('click',e=>{if(e.target===$('fishDetail'))$('fishDetail').hidden=true;});
+document.querySelectorAll('.fish-card').forEach(btn=>btn.addEventListener('click',()=>{
+  const entry=btn.closest('.fish-entry');
+  const desc=entry.querySelector('.fish-card-description');
+  const open=desc.hidden;
+  desc.hidden=!open;
+  btn.setAttribute('aria-expanded',String(open));
+  btn.querySelector('.fish-desc-arrow').textContent=open?'⌃':'⌄';
+}));
 for(let i=0;i<18;i++)setTimeout(()=>makeBubble(),i*280);
 for(let i=0;i<34;i++){const p=document.createElement('i');p.className='water-particle';p.style.left=(Math.random()*100)+'%';p.style.top=(35+Math.random()*65)+'%';p.style.animationDelay=(-Math.random()*8)+'s';p.style.animationDuration=(6+Math.random()*7)+'s';$('waterParticles').appendChild(p)}
 setInterval(()=>{if(!relax && Math.random()>.6){happy=Math.max(60,happy-1);updateStats()}},30000);
