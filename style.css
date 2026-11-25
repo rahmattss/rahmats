@@ -163,6 +163,18 @@ body.light .site-footer{background:#0a2b45}
 @media(max-width:560px){.tank-fish .swim img{width:clamp(46px,12vw,72px)}.fish-card>img{height:88px}}
 
 /* Update: interaksi klik ikan dan ubur-ubur */
-@keyframes fishDart{0%{transform:translateX(0) translateY(0) scale(1)}18%{transform:translateX(42px) translateY(-18px) scale(1.18)}38%{transform:translateX(-55px) translateY(13px) scale(1.08)}60%{transform:translateX(38px) translateY(-10px) scale(1.15)}82%{transform:translateX(-25px) translateY(8px) scale(1.05)}100%{transform:translateX(0) translateY(0) scale(1)}}
+@keyframes fishDart{0%{transform:translate3d(0,0,0) scale(1) rotate(0)}16%{transform:translate3d(68px,-28px,0) scale(1.22) rotate(-8deg)}34%{transform:translate3d(-76px,22px,0) scale(1.12) rotate(7deg)}54%{transform:translate3d(58px,-18px,0) scale(1.2) rotate(-6deg)}74%{transform:translate3d(-34px,12px,0) scale(1.08) rotate(4deg)}100%{transform:translate3d(0,0,0) scale(1) rotate(0)}}18%{transform:translateX(42px) translateY(-18px) scale(1.18)}38%{transform:translateX(-55px) translateY(13px) scale(1.08)}60%{transform:translateX(38px) translateY(-10px) scale(1.15)}82%{transform:translateX(-25px) translateY(8px) scale(1.05)}100%{transform:translateX(0) translateY(0) scale(1)}}
 .tank-fish .swim.darting{animation:fishDart 1.2s ease-in-out!important;filter:drop-shadow(0 0 12px #ffe99a)!important;z-index:10}
 .tank-fish .swim.darting img{filter:brightness(1.18) drop-shadow(0 0 8px #fff0a8)}
+
+/* Perbaikan animasi klik ikan: gerakan cepat terlihat jelas. */
+#tankFish .swim.darting {
+  animation: fishDart 1.15s cubic-bezier(.2,.8,.25,1) both !important;
+  transform-origin: center;
+  will-change: transform, filter;
+  filter: drop-shadow(0 0 14px #fff0a8) !important;
+  z-index: 30 !important;
+}
+#tankFish .swim.darting img {
+  filter: brightness(1.25) drop-shadow(0 0 10px #fff0a8) !important;
+}

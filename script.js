@@ -226,7 +226,7 @@ setInterval(()=>{if(hunger>0){hunger=Math.max(0,hunger-1);if(hunger<30)happy=Mat
 
 
 // V8: pindahkan ikan dari akuarium kembali ke inventaris.
-let moveFishMode = false;
+
 function moveFishToInventory(el){
   if(!moveFishMode||!el||!el.isConnected)return;
   const kind=el.dataset.fishKind||'clown';
@@ -245,6 +245,7 @@ function kindFromEmoji(emoji){
   if(emoji==='🐟') return 'tang';
   return 'clown';
 }
+let moveFishMode = false;
 function setupTankFishKinds(){
   const initial=['clown','tang','puffer','clown','tang','clown','tang','clown','puffer','tang'];
   [...$('tankFish').querySelectorAll('.swim')].forEach((el,i)=>{
